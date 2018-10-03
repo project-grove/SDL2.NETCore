@@ -1,0 +1,3 @@
+[submodule "deps/nativelibraryloader"]
+	path = deps/nativelibraryloader
+	url = git@github.com:mellinoe/nativelibraryloader.git
