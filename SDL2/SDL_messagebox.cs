@@ -27,6 +27,7 @@ using static SDL2.SDL_surface;
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -98,10 +99,18 @@ namespace SDL2
 
         }
 
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_ShowMessageBox(ref SDL_MessageBoxData messageboxdata, ref int buttonid);
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_ShowSimpleMessageBox(UInt32 flags, IntPtr title, IntPtr message, IntPtr window);
+        private delegate int SDL_ShowMessageBox_SDL_MessageBoxData_int_t(ref SDL_MessageBoxData messageboxdata, ref int buttonid);
 
+        private static SDL_ShowMessageBox_SDL_MessageBoxData_int_t s_SDL_ShowMessageBox_SDL_MessageBoxData_int_t = __LoadFunction<SDL_ShowMessageBox_SDL_MessageBoxData_int_t>("SDL_ShowMessageBox");
+
+        public static int SDL_ShowMessageBox(ref SDL_MessageBoxData messageboxdata, ref int buttonid) => s_SDL_ShowMessageBox_SDL_MessageBoxData_int_t(ref messageboxdata, ref buttonid);
+
+        private delegate int SDL_ShowSimpleMessageBox_UInt32_IntPtr_IntPtr_IntPtr_t(UInt32 flags, IntPtr title, IntPtr message, IntPtr window);
+
+        private static SDL_ShowSimpleMessageBox_UInt32_IntPtr_IntPtr_IntPtr_t s_SDL_ShowSimpleMessageBox_UInt32_IntPtr_IntPtr_IntPtr_t = __LoadFunction<SDL_ShowSimpleMessageBox_UInt32_IntPtr_IntPtr_IntPtr_t>("SDL_ShowSimpleMessageBox");
+
+        public static int SDL_ShowSimpleMessageBox(UInt32 flags, IntPtr title, IntPtr message, IntPtr window) => s_SDL_ShowSimpleMessageBox_UInt32_IntPtr_IntPtr_IntPtr_t(flags, title, message, window);
+        private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }
+

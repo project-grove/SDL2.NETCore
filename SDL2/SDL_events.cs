@@ -34,6 +34,7 @@ using SDL_TouchID = System.Int64;
 using SDL_FingerID = System.Int64;
 using SDL_GestureID = System.Int64;
 using SDL_EventFilter = System.IntPtr;
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -51,7 +52,7 @@ namespace SDL2
 
         // This struct should be cast depending on the event type
         // The field here is to ensure proper struct size to hold all variations
-        [StructLayout(LayoutKind.Explicit, Size=56)]
+        [StructLayout(LayoutKind.Explicit, Size = 56)]
         public struct SDL_Event
         {
             [FieldOffset(0)]
@@ -467,40 +468,108 @@ namespace SDL2
 
         }
 
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_PumpEvents();
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_PeepEvents(ref SDL_Event events, int numevents, SDL_eventaction action, UInt32 minType, UInt32 maxType);
-        [DllImport("libSDL2.so")]
-        public static extern SDL_bool SDL_HasEvent(UInt32 type);
-        [DllImport("libSDL2.so")]
-        public static extern SDL_bool SDL_HasEvents(UInt32 minType, UInt32 maxType);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_FlushEvent(UInt32 type);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_FlushEvents(UInt32 minType, UInt32 maxType);
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_PollEvent(ref SDL_Event @event);
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_WaitEvent(ref SDL_Event @event);
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_WaitEventTimeout(ref SDL_Event @event, int timeout);
-        [DllImport("libSDL2.so")]
-        public static extern int SDL_PushEvent(ref SDL_Event @event);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_SetEventFilter(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern SDL_bool SDL_GetEventFilter(ref SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_AddEventWatch(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_DelEventWatch(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_FilterEvents(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern byte SDL_EventState(UInt32 type, int state);
-        [DllImport("libSDL2.so")]
-        public static extern uint SDL_RegisterEvents(int numevents);
+        private delegate void SDL_PumpEvents__t();
 
+        private static SDL_PumpEvents__t s_SDL_PumpEvents__t = __LoadFunction<SDL_PumpEvents__t>("SDL_PumpEvents");
+
+        public static void SDL_PumpEvents() => s_SDL_PumpEvents__t();
+
+        private delegate int SDL_PeepEvents_SDL_Event_int_SDL_eventaction_UInt32_UInt32_t(ref SDL_Event events, int numevents, SDL_eventaction action, UInt32 minType, UInt32 maxType);
+
+        private static SDL_PeepEvents_SDL_Event_int_SDL_eventaction_UInt32_UInt32_t s_SDL_PeepEvents_SDL_Event_int_SDL_eventaction_UInt32_UInt32_t = __LoadFunction<SDL_PeepEvents_SDL_Event_int_SDL_eventaction_UInt32_UInt32_t>("SDL_PeepEvents");
+
+        public static int SDL_PeepEvents(ref SDL_Event events, int numevents, SDL_eventaction action, UInt32 minType, UInt32 maxType) => s_SDL_PeepEvents_SDL_Event_int_SDL_eventaction_UInt32_UInt32_t(ref events, numevents, action, minType, maxType);
+
+        private delegate SDL_bool SDL_HasEvent_UInt32_t(UInt32 type);
+
+        private static SDL_HasEvent_UInt32_t s_SDL_HasEvent_UInt32_t = __LoadFunction<SDL_HasEvent_UInt32_t>("SDL_HasEvent");
+
+        public static SDL_bool SDL_HasEvent(UInt32 type) => s_SDL_HasEvent_UInt32_t(type);
+
+        private delegate SDL_bool SDL_HasEvents_UInt32_UInt32_t(UInt32 minType, UInt32 maxType);
+
+        private static SDL_HasEvents_UInt32_UInt32_t s_SDL_HasEvents_UInt32_UInt32_t = __LoadFunction<SDL_HasEvents_UInt32_UInt32_t>("SDL_HasEvents");
+
+        public static SDL_bool SDL_HasEvents(UInt32 minType, UInt32 maxType) => s_SDL_HasEvents_UInt32_UInt32_t(minType, maxType);
+
+        private delegate void SDL_FlushEvent_UInt32_t(UInt32 type);
+
+        private static SDL_FlushEvent_UInt32_t s_SDL_FlushEvent_UInt32_t = __LoadFunction<SDL_FlushEvent_UInt32_t>("SDL_FlushEvent");
+
+        public static void SDL_FlushEvent(UInt32 type) => s_SDL_FlushEvent_UInt32_t(type);
+
+        private delegate void SDL_FlushEvents_UInt32_UInt32_t(UInt32 minType, UInt32 maxType);
+
+        private static SDL_FlushEvents_UInt32_UInt32_t s_SDL_FlushEvents_UInt32_UInt32_t = __LoadFunction<SDL_FlushEvents_UInt32_UInt32_t>("SDL_FlushEvents");
+
+        public static void SDL_FlushEvents(UInt32 minType, UInt32 maxType) => s_SDL_FlushEvents_UInt32_UInt32_t(minType, maxType);
+
+        private delegate int SDL_PollEvent_SDL_Event_t(ref SDL_Event @event);
+
+        private static SDL_PollEvent_SDL_Event_t s_SDL_PollEvent_SDL_Event_t = __LoadFunction<SDL_PollEvent_SDL_Event_t>("SDL_PollEvent");
+
+        public static int SDL_PollEvent(ref SDL_Event @event) => s_SDL_PollEvent_SDL_Event_t(ref @event);
+
+        private delegate int SDL_WaitEvent_SDL_Event_t(ref SDL_Event @event);
+
+        private static SDL_WaitEvent_SDL_Event_t s_SDL_WaitEvent_SDL_Event_t = __LoadFunction<SDL_WaitEvent_SDL_Event_t>("SDL_WaitEvent");
+
+        public static int SDL_WaitEvent(ref SDL_Event @event) => s_SDL_WaitEvent_SDL_Event_t(ref @event);
+
+        private delegate int SDL_WaitEventTimeout_SDL_Event_int_t(ref SDL_Event @event, int timeout);
+
+        private static SDL_WaitEventTimeout_SDL_Event_int_t s_SDL_WaitEventTimeout_SDL_Event_int_t = __LoadFunction<SDL_WaitEventTimeout_SDL_Event_int_t>("SDL_WaitEventTimeout");
+
+        public static int SDL_WaitEventTimeout(ref SDL_Event @event, int timeout) => s_SDL_WaitEventTimeout_SDL_Event_int_t(ref @event, timeout);
+
+        private delegate int SDL_PushEvent_SDL_Event_t(ref SDL_Event @event);
+
+        private static SDL_PushEvent_SDL_Event_t s_SDL_PushEvent_SDL_Event_t = __LoadFunction<SDL_PushEvent_SDL_Event_t>("SDL_PushEvent");
+
+        public static int SDL_PushEvent(ref SDL_Event @event) => s_SDL_PushEvent_SDL_Event_t(ref @event);
+
+        private delegate void SDL_SetEventFilter_SDL_EventFilter_IntPtr_t(SDL_EventFilter filter, IntPtr userdata);
+
+        private static SDL_SetEventFilter_SDL_EventFilter_IntPtr_t s_SDL_SetEventFilter_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_SetEventFilter_SDL_EventFilter_IntPtr_t>("SDL_SetEventFilter");
+
+        public static void SDL_SetEventFilter(SDL_EventFilter filter, IntPtr userdata) => s_SDL_SetEventFilter_SDL_EventFilter_IntPtr_t(filter, userdata);
+
+        private delegate SDL_bool SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref SDL_EventFilter filter, IntPtr userdata);
+
+        private static SDL_GetEventFilter_SDL_EventFilter_IntPtr_t s_SDL_GetEventFilter_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_GetEventFilter_SDL_EventFilter_IntPtr_t>("SDL_GetEventFilter");
+
+        public static SDL_bool SDL_GetEventFilter(ref SDL_EventFilter filter, IntPtr userdata) => s_SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref filter, userdata);
+
+        private delegate void SDL_AddEventWatch_SDL_EventFilter_IntPtr_t(SDL_EventFilter filter, IntPtr userdata);
+
+        private static SDL_AddEventWatch_SDL_EventFilter_IntPtr_t s_SDL_AddEventWatch_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_AddEventWatch_SDL_EventFilter_IntPtr_t>("SDL_AddEventWatch");
+
+        public static void SDL_AddEventWatch(SDL_EventFilter filter, IntPtr userdata) => s_SDL_AddEventWatch_SDL_EventFilter_IntPtr_t(filter, userdata);
+
+        private delegate void SDL_DelEventWatch_SDL_EventFilter_IntPtr_t(SDL_EventFilter filter, IntPtr userdata);
+
+        private static SDL_DelEventWatch_SDL_EventFilter_IntPtr_t s_SDL_DelEventWatch_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_DelEventWatch_SDL_EventFilter_IntPtr_t>("SDL_DelEventWatch");
+
+        public static void SDL_DelEventWatch(SDL_EventFilter filter, IntPtr userdata) => s_SDL_DelEventWatch_SDL_EventFilter_IntPtr_t(filter, userdata);
+
+        private delegate void SDL_FilterEvents_SDL_EventFilter_IntPtr_t(SDL_EventFilter filter, IntPtr userdata);
+
+        private static SDL_FilterEvents_SDL_EventFilter_IntPtr_t s_SDL_FilterEvents_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_FilterEvents_SDL_EventFilter_IntPtr_t>("SDL_FilterEvents");
+
+        public static void SDL_FilterEvents(SDL_EventFilter filter, IntPtr userdata) => s_SDL_FilterEvents_SDL_EventFilter_IntPtr_t(filter, userdata);
+
+        private delegate byte SDL_EventState_UInt32_int_t(UInt32 type, int state);
+
+        private static SDL_EventState_UInt32_int_t s_SDL_EventState_UInt32_int_t = __LoadFunction<SDL_EventState_UInt32_int_t>("SDL_EventState");
+
+        public static byte SDL_EventState(UInt32 type, int state) => s_SDL_EventState_UInt32_int_t(type, state);
+
+        private delegate uint SDL_RegisterEvents_int_t(int numevents);
+
+        private static SDL_RegisterEvents_int_t s_SDL_RegisterEvents_int_t = __LoadFunction<SDL_RegisterEvents_int_t>("SDL_RegisterEvents");
+
+        public static uint SDL_RegisterEvents(int numevents) => s_SDL_RegisterEvents_int_t(numevents);
+        private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }
+

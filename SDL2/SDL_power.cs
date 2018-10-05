@@ -27,6 +27,7 @@ using static SDL2.SDL_surface;
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -44,9 +45,12 @@ namespace SDL2
 
         }
 
+        private delegate SDL_PowerState SDL_GetPowerInfo_int_int_t(ref int secs, ref int pct);
 
-        [DllImport("libSDL2.so")]
-        public static extern SDL_PowerState SDL_GetPowerInfo(ref int secs, ref int pct);
+        private static SDL_GetPowerInfo_int_int_t s_SDL_GetPowerInfo_int_int_t = __LoadFunction<SDL_GetPowerInfo_int_int_t>("SDL_GetPowerInfo");
 
+        public static SDL_PowerState SDL_GetPowerInfo(ref int secs, ref int pct) => s_SDL_GetPowerInfo_int_int_t(ref secs, ref pct);
+        private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }
+

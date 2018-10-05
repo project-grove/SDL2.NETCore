@@ -30,7 +30,7 @@ using static SDL2.SDL_video;
 
 using SDL_HintCallback = System.IntPtr;
 using SDL_bool = System.Int32;
-
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -72,19 +72,42 @@ namespace SDL2
 
         }
 
+        private delegate SDL_bool SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t(IntPtr name, IntPtr value, SDL_HintPriority priority);
 
-        [DllImport("libSDL2.so")]
-        public static extern SDL_bool SDL_SetHintWithPriority(IntPtr name, IntPtr value, SDL_HintPriority priority);
-        [DllImport("libSDL2.so")]
-        public static extern SDL_bool SDL_SetHint(IntPtr name, IntPtr value);
-        [DllImport("libSDL2.so")]
-        public static extern IntPtr SDL_GetHint(IntPtr name);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_AddHintCallback(IntPtr name, SDL_HintCallback callback, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_DelHintCallback(IntPtr name, SDL_HintCallback callback, IntPtr userdata);
-        [DllImport("libSDL2.so")]
-        public static extern void SDL_ClearHints();
+        private static SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t s_SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t = __LoadFunction<SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t>("SDL_SetHintWithPriority");
 
+        public static SDL_bool SDL_SetHintWithPriority(IntPtr name, IntPtr value, SDL_HintPriority priority) => s_SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t(name, value, priority);
+
+        private delegate SDL_bool SDL_SetHint_IntPtr_IntPtr_t(IntPtr name, IntPtr value);
+
+        private static SDL_SetHint_IntPtr_IntPtr_t s_SDL_SetHint_IntPtr_IntPtr_t = __LoadFunction<SDL_SetHint_IntPtr_IntPtr_t>("SDL_SetHint");
+
+        public static SDL_bool SDL_SetHint(IntPtr name, IntPtr value) => s_SDL_SetHint_IntPtr_IntPtr_t(name, value);
+
+        private delegate IntPtr SDL_GetHint_IntPtr_t(IntPtr name);
+
+        private static SDL_GetHint_IntPtr_t s_SDL_GetHint_IntPtr_t = __LoadFunction<SDL_GetHint_IntPtr_t>("SDL_GetHint");
+
+        public static IntPtr SDL_GetHint(IntPtr name) => s_SDL_GetHint_IntPtr_t(name);
+
+        private delegate void SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t(IntPtr name, SDL_HintCallback callback, IntPtr userdata);
+
+        private static SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t s_SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t = __LoadFunction<SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t>("SDL_AddHintCallback");
+
+        public static void SDL_AddHintCallback(IntPtr name, SDL_HintCallback callback, IntPtr userdata) => s_SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t(name, callback, userdata);
+
+        private delegate void SDL_DelHintCallback_IntPtr_SDL_HintCallback_IntPtr_t(IntPtr name, SDL_HintCallback callback, IntPtr userdata);
+
+        private static SDL_DelHintCallback_IntPtr_SDL_HintCallback_IntPtr_t s_SDL_DelHintCallback_IntPtr_SDL_HintCallback_IntPtr_t = __LoadFunction<SDL_DelHintCallback_IntPtr_SDL_HintCallback_IntPtr_t>("SDL_DelHintCallback");
+
+        public static void SDL_DelHintCallback(IntPtr name, SDL_HintCallback callback, IntPtr userdata) => s_SDL_DelHintCallback_IntPtr_SDL_HintCallback_IntPtr_t(name, callback, userdata);
+
+        private delegate void SDL_ClearHints__t();
+
+        private static SDL_ClearHints__t s_SDL_ClearHints__t = __LoadFunction<SDL_ClearHints__t>("SDL_ClearHints");
+
+        public static void SDL_ClearHints() => s_SDL_ClearHints__t();
+        private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }
+

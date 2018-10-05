@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nativelibraryloader", "nati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibraryLoader", "deps\nativelibraryloader\NativeLibraryLoader\NativeLibraryLoader.csproj", "{3774509D-8B89-41F8-A2F6-523616B3180C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDL2.NETCore", "src\SDL2.NETCore.csproj", "{A339FBC5-0B0A-4568-BDF6-13325CEE799B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDL2.NETCore", "SDL2\SDL2.NETCore.csproj", "{A339FBC5-0B0A-4568-BDF6-13325CEE799B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

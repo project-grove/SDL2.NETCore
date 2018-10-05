@@ -27,6 +27,7 @@ using static SDL2.SDL_surface;
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -57,9 +58,11 @@ namespace SDL2
 
         }
 
-        public static int SDL_scancode_to_keycode(int scancode) {
+        public static int SDL_scancode_to_keycode(int scancode)
+        {
             return scancode | SDLK_SCANCODE_MASK;
         }
 
     }
 }
+

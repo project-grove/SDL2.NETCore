@@ -27,6 +27,7 @@ using static SDL2.SDL_surface;
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
+using NativeLibraryLoader;
 
 namespace SDL2
 {
@@ -395,3 +396,4 @@ namespace SDL2
 
     }
 }
+
