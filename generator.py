@@ -74,6 +74,7 @@ def extract_structs(source):
     result = ""
     matches = [m.groupdict() for m in STRUCT_REGEX.finditer(source)]
     for match in matches:
+        result += "[StructLayout(LayoutKind.Sequential)]\n"
         result += "public struct " + match["name"] + "\n{\n"
         result += match["contents"]
         result += "\n}\n"
@@ -89,6 +90,7 @@ def extract_enums(source):
     return result + "\n"
 
 def rewrite_function_return_type(name):
+    name = name.strip()
     if name.startswith('const '):
         name = name[6:]
     if '*' not in name:

@@ -1,0 +1,116 @@
+using System;
+using System.Runtime.InteropServices;
+
+using SDL2;
+using static SDL2.SDL_audio;
+using static SDL2.SDL_blendmode;
+using static SDL2.SDL_clipboard;
+using static SDL2.SDL_cpuinfo;
+using static SDL2.SDL_error;
+using static SDL2.SDL_events;
+using static SDL2.SDL_gamecontroller;
+using static SDL2.SDL_gesture;
+using static SDL2.SDL_haptic;
+using static SDL2.SDL_hints;
+
+using static SDL2.SDL_joystick;
+using static SDL2.SDL_keyboard;
+using static SDL2.SDL_keycode;
+using static SDL2.SDL_messagebox;
+using static SDL2.SDL_mouse;
+using static SDL2.SDL_power;
+using static SDL2.SDL_rect;
+using static SDL2.SDL_render;
+using static SDL2.SDL_scancode;
+using static SDL2.SDL_surface;
+using static SDL2.SDL_timer;
+using static SDL2.SDL_touch;
+using static SDL2.SDL_version;
+using static SDL2.SDL_video;
+
+namespace SDL2
+{
+public static class SDL_pixels
+{
+public const int SDL_ALPHA_OPAQUE = 255;
+public const int SDL_ALPHA_TRANSPARENT = 0;
+public const int SDL_Colour = SDL_Color;
+
+
+[StructLayout(LayoutKind.Sequential)]
+public struct SDL_Color
+{
+
+    Uint8 r;
+    Uint8 g;
+    Uint8 b;
+    Uint8 a;
+
+}
+[StructLayout(LayoutKind.Sequential)]
+public struct SDL_Palette
+{
+
+    int ncolors;
+    SDL_Color *colors;
+    Uint32 version;
+    int refcount;
+
+}
+[StructLayout(LayoutKind.Sequential)]
+public struct SDL_PixelFormat
+{
+
+    Uint32 format;
+    SDL_Palette *palette;
+    Uint8 BitsPerPixel;
+    Uint8 BytesPerPixel;
+    Uint8 padding[2];
+    Uint32 Rmask;
+    Uint32 Gmask;
+    Uint32 Bmask;
+    Uint32 Amask;
+    Uint8 Rloss;
+    Uint8 Gloss;
+    Uint8 Bloss;
+    Uint8 Aloss;
+    Uint8 Rshift;
+    Uint8 Gshift;
+    Uint8 Bshift;
+    Uint8 Ashift;
+    int refcount;
+    struct SDL_PixelFormat *next;
+
+}
+
+[DllImport("SDL2.dll")]
+public static extern IntPtr SDL_GetPixelFormatName(Uint32 format);
+[DllImport("SDL2.dll")]
+public static extern SDL_bool SDL_PixelFormatEnumToMasks(Uint32 format, ref int bpp, ref uint Rmask, ref uint Gmask, ref uint Bmask, ref uint Amask);
+[DllImport("SDL2.dll")]
+public static extern uint SDL_MasksToPixelFormatEnum(int bpp, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask);
+[DllImport("SDL2.dll")]
+public static extern IntPtr SDL_AllocFormat(Uint32 pixel_format);
+[DllImport("SDL2.dll")]
+public static extern void SDL_FreeFormat(ref SDL_PixelFormat format);
+[DllImport("SDL2.dll")]
+public static extern IntPtr SDL_AllocPalette(int ncolors);
+[DllImport("SDL2.dll")]
+public static extern int SDL_SetPixelFormatPalette(ref SDL_PixelFormat format, ref SDL_Palette palette);
+[DllImport("SDL2.dll")]
+public static extern int SDL_SetPaletteColors(ref SDL_Palette palette, ref SDL_Color colors, int firstcolor, int ncolors);
+[DllImport("SDL2.dll")]
+public static extern void SDL_FreePalette(ref SDL_Palette palette);
+[DllImport("SDL2.dll")]
+public static extern uint SDL_MapRGB(ref SDL_PixelFormat format, Uint8 r, Uint8 g, Uint8 b);
+[DllImport("SDL2.dll")]
+public static extern uint SDL_MapRGBA(ref SDL_PixelFormat format, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+[DllImport("SDL2.dll")]
+public static extern void SDL_GetRGB(Uint32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b);
+[DllImport("SDL2.dll")]
+public static extern void SDL_GetRGBA(Uint32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b, ref byte a);
+[DllImport("SDL2.dll")]
+public static extern void SDL_CalculateGammaRamp(float gamma, ref ushort ramp);
+
+}
+}
