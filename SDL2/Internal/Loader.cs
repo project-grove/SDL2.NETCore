@@ -25,7 +25,10 @@ namespace SDL2.Internal
             } else if (IsOSPlatform(OSPlatform.OSX)) {
                 names = new [] { "libSDL2.dylib" };
             } else {
-                names = new [] { "libSDL2.so" };
+                names = new [] {
+                    "libSDL2-2.0.so.0",
+                    "libSDL2.so"
+                };
             }
             return new NativeLibrary(names);
         }

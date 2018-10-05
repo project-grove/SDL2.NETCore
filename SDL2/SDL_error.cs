@@ -50,7 +50,8 @@ namespace SDL2
 
         private static SDL_GetError__t s_SDL_GetError__t = __LoadFunction<SDL_GetError__t>("SDL_GetError");
 
-        public static IntPtr SDL_GetError() => s_SDL_GetError__t();
+        static IntPtr _SDL_GetError() => s_SDL_GetError__t();
+        public static string SDL_GetError() => Marshal.PtrToStringAnsi(_SDL_GetError());
 
         private delegate void SDL_ClearError__t();
 
