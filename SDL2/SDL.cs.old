@@ -1,0 +1,56 @@
+using System;
+
+namespace SDL2
+{
+    public static class SDL
+    {
+        public const int SDL_INIT_TIMER = 0x00000001;
+        public const int SDL_INIT_AUDIO = 0x00000010;
+        public const int SDL_INIT_VIDEO = 0x00000020;  /**< SDL_INIT_VIDEO implies SDL_INIT_EVENTS */
+        public const int SDL_INIT_JOYSTICK = 0x00000200;  /**< SDL_INIT_JOYSTICK implies SDL_INIT_EVENTS */
+        public const int SDL_INIT_HAPTIC = 0x00001000;
+        public const int SDL_INIT_GAMECONTROLLER = 0x00002000;  /**< SDL_INIT_GAMECONTROLLER implies SDL_INIT_JOYSTICK */
+        public const int SDL_INIT_EVENTS = 0x00004000;
+        public const int SDL_INIT_NOPARACHUTE = 0x00100000;  /**< Don't catch fatal signals */
+        public const int SDL_INIT_EVERYTHING = (
+                        SDL_INIT_TIMER | SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_EVENTS |
+                        SDL_INIT_JOYSTICK | SDL_INIT_HAPTIC | SDL_INIT_GAMECONTROLLER
+                    );
+
+        /**
+     *  This function initializes  the subsystems specified by \c flags
+     *  Unless the ::SDL_INIT_NOPARACHUTE flag is set, it will install cleanup
+     *  signal handlers for some commonly ignored fatal signals (like SIGSEGV).
+     */
+        [DllImport]
+        public static extern int SDL_Init(UInt32 flags);
+
+        /**
+         *  This function initializes specific SDL subsystems
+         */
+        [DllImport]
+        public static extern int SDL_InitSubSystem(UInt32 flags);
+
+        /**
+         *  This function cleans up specific SDL subsystems
+         */
+        [DllImport]
+        public static extern void SDL_QuitSubSystem(UInt32 flags);
+
+        /**
+         *  This function returns a mask of the specified subsystems which have
+         *  previously been initialized.
+         *
+         *  If \c flags is 0, it returns a mask of all initialized subsystems.
+         */
+        [DllImport]
+        public static extern UInt32 SDL_WasInit(UInt32 flags);
+
+        /**
+         *  This function cleans up all initialized subsystems. You should
+         *  call it upon all exit conditions.
+         */
+        [DllImport]
+        public static extern void SDL_Quit();
+    }
+}
