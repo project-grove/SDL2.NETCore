@@ -16,7 +16,7 @@ excluded = list(map(re.compile, [
 excluded.extend(map(lambda n: re.compile("SDL_" + n + ".h"), [
     "assert", "atomic", "bits", "config", "endian", "filesystem", "loadso",
     "log", "main", "mutex", "name", "platform", "quit", "revision", "rwops",
-    "shape", "stdinc", "system", "syswm", "thread", "types", 
+    "shape", "stdinc", "system", "syswm", "thread", "timer", "types", 
 ]))
 
 def useful_names(name):
@@ -122,7 +122,7 @@ def extract_functions(source):
     result = ""
     matches = [m.groupdict() for m in FUNCTION_REGEX.finditer(source)]
     for match in matches:
-        result += "[DllImport(\"SDL2.dll\")]\n"
+        result += "[DllImport(\"libSDL2.so\")]\n"
         result += "public static extern "
         result += rewrite_function_return_type(match["return_type"])
         result += " " + match["name"]

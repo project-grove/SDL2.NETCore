@@ -24,35 +24,38 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
+using SDL_TouchID = System.Int64;
+using SDL_FingerID = System.Int64;
+
 namespace SDL2
 {
-public static class SDL_touch
-{
+    public static class SDL_touch
+    {
 
 
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_Finger
-{
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_Finger
+        {
 
-    SDL_FingerID id;
-    float x;
-    float y;
-    float pressure;
+            SDL_FingerID id;
+            float x;
+            float y;
+            float pressure;
 
-}
+        }
 
-[DllImport("SDL2.dll")]
-public static extern int SDL_GetNumTouchDevices();
-[DllImport("SDL2.dll")]
-public static extern SDL_TouchID SDL_GetTouchDevice(int index);
-[DllImport("SDL2.dll")]
-public static extern int SDL_GetNumTouchFingers(SDL_TouchID touchID);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_GetTouchFinger(SDL_TouchID touchID, int index);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_GetNumTouchDevices();
+        [DllImport("libSDL2.so")]
+        public static extern SDL_TouchID SDL_GetTouchDevice(int index);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_GetNumTouchFingers(SDL_TouchID touchID);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_GetTouchFinger(SDL_TouchID touchID, int index);
 
-}
+    }
 }

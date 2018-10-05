@@ -23,7 +23,7 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
@@ -467,39 +467,39 @@ namespace SDL2
 
         }
 
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_PumpEvents();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_PeepEvents(ref SDL_Event events, int numevents, SDL_eventaction action, UInt32 minType, UInt32 maxType);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasEvent(UInt32 type);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasEvents(UInt32 minType, UInt32 maxType);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_FlushEvent(UInt32 type);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_FlushEvents(UInt32 minType, UInt32 maxType);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_PollEvent(ref SDL_Event @event);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_WaitEvent(ref SDL_Event @event);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_WaitEventTimeout(ref SDL_Event @event, int timeout);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_PushEvent(ref SDL_Event @event);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_SetEventFilter(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_GetEventFilter(ref SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_AddEventWatch(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_DelEventWatch(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_FilterEvents(SDL_EventFilter filter, IntPtr userdata);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern byte SDL_EventState(UInt32 type, int state);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern uint SDL_RegisterEvents(int numevents);
 
     }

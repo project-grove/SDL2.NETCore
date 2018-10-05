@@ -23,44 +23,46 @@ using static SDL2.SDL_power;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
+using SDL_bool = System.Int32;
+
 namespace SDL2
 {
-public static class SDL_rect
-{
+    public static class SDL_rect
+    {
 
 
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_Point
-{
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_Point
+        {
 
-    int x;
-    int y;
+            public int x;
+            public int y;
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_Rect
-{
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_Rect
+        {
 
-    int x, y;
-    int w, h;
+            public int x, y;
+            public int w, h;
 
-}
+        }
 
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_HasIntersection(ref SDL_Rect A, ref SDL_Rect B);
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_IntersectRect(ref SDL_Rect A, ref SDL_Rect B, ref SDL_Rect result);
-[DllImport("SDL2.dll")]
-public static extern void SDL_UnionRect(ref SDL_Rect A, ref SDL_Rect B, ref SDL_Rect result);
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_EnclosePoints(ref SDL_Point points, int count, ref SDL_Rect clip, ref SDL_Rect result);
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_IntersectRectAndLine(ref SDL_Rect rect, ref int X1, ref int Y1, ref int X2, ref int Y2);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_HasIntersection(ref SDL_Rect A, ref SDL_Rect B);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_IntersectRect(ref SDL_Rect A, ref SDL_Rect B, ref SDL_Rect result);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_UnionRect(ref SDL_Rect A, ref SDL_Rect B, ref SDL_Rect result);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_EnclosePoints(ref SDL_Point points, int count, ref SDL_Rect clip, ref SDL_Rect result);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_IntersectRectAndLine(ref SDL_Rect rect, ref int X1, ref int Y1, ref int X2, ref int Y2);
 
-}
+    }
 }

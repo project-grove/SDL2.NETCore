@@ -23,30 +23,30 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
 namespace SDL2
 {
-public static class SDL_power
-{
+    public static class SDL_power
+    {
 
-public enum SDL_PowerState
-{
+        public enum SDL_PowerState
+        {
 
-    SDL_POWERSTATE_UNKNOWN,      /**< cannot determine power status */
-    SDL_POWERSTATE_ON_BATTERY,   /**< Not plugged in, running on the battery */
-    SDL_POWERSTATE_NO_BATTERY,   /**< Plugged in, no battery available */
-    SDL_POWERSTATE_CHARGING,     /**< Plugged in, charging battery */
-    SDL_POWERSTATE_CHARGED       /**< Plugged in, battery charged */
+            SDL_POWERSTATE_UNKNOWN,      /**< cannot determine power status */
+            SDL_POWERSTATE_ON_BATTERY,   /**< Not plugged in, running on the battery */
+            SDL_POWERSTATE_NO_BATTERY,   /**< Plugged in, no battery available */
+            SDL_POWERSTATE_CHARGING,     /**< Plugged in, charging battery */
+            SDL_POWERSTATE_CHARGED       /**< Plugged in, battery charged */
 
-}
+        }
 
 
-[DllImport("SDL2.dll")]
-public static extern SDL_PowerState SDL_GetPowerInfo(ref int secs, ref int pct);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_PowerState SDL_GetPowerInfo(ref int secs, ref int pct);
 
-}
+    }
 }

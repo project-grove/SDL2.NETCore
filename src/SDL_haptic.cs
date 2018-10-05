@@ -23,261 +23,273 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
 namespace SDL2
 {
-public static class SDL_haptic
-{
-public const int SDL_HAPTIC_CONSTANT = 1<<0;
-public const int SDL_HAPTIC_SINE = 1<<1;
-public const int SDL_HAPTIC_LEFTRIGHT = 1<<2;
-public const int SDL_HAPTIC_SQUARE = 1<<2;
-public const int SDL_HAPTIC_TRIANGLE = 1<<3;
-public const int SDL_HAPTIC_SAWTOOTHUP = 1<<4;
-public const int SDL_HAPTIC_SAWTOOTHDOWN = 1<<5;
-public const int SDL_HAPTIC_RAMP = 1<<6;
-public const int SDL_HAPTIC_SPRING = 1<<7;
-public const int SDL_HAPTIC_DAMPER = 1<<8;
-public const int SDL_HAPTIC_INERTIA = 1<<9;
-public const int SDL_HAPTIC_FRICTION = 1<<10;
-public const int SDL_HAPTIC_CUSTOM = 1<<11;
-public const int SDL_HAPTIC_GAIN = 1<<12;
-public const int SDL_HAPTIC_AUTOCENTER = 1<<13;
-public const int SDL_HAPTIC_STATUS = 1<<14;
-public const int SDL_HAPTIC_PAUSE = 1<<15;
-public const int SDL_HAPTIC_POLAR = 0;
-public const int SDL_HAPTIC_CARTESIAN = 1;
-public const int SDL_HAPTIC_SPHERICAL = 2;
-public const int SDL_HAPTIC_INFINITY = 4294967295U;
+    public static class SDL_haptic
+    {
+        public const int SDL_HAPTIC_CONSTANT = 1 << 0;
+        public const int SDL_HAPTIC_SINE = 1 << 1;
+        public const int SDL_HAPTIC_LEFTRIGHT = 1 << 2;
+        public const int SDL_HAPTIC_SQUARE = 1 << 2;
+        public const int SDL_HAPTIC_TRIANGLE = 1 << 3;
+        public const int SDL_HAPTIC_SAWTOOTHUP = 1 << 4;
+        public const int SDL_HAPTIC_SAWTOOTHDOWN = 1 << 5;
+        public const int SDL_HAPTIC_RAMP = 1 << 6;
+        public const int SDL_HAPTIC_SPRING = 1 << 7;
+        public const int SDL_HAPTIC_DAMPER = 1 << 8;
+        public const int SDL_HAPTIC_INERTIA = 1 << 9;
+        public const int SDL_HAPTIC_FRICTION = 1 << 10;
+        public const int SDL_HAPTIC_CUSTOM = 1 << 11;
+        public const int SDL_HAPTIC_GAIN = 1 << 12;
+        public const int SDL_HAPTIC_AUTOCENTER = 1 << 13;
+        public const int SDL_HAPTIC_STATUS = 1 << 14;
+        public const int SDL_HAPTIC_PAUSE = 1 << 15;
+        public const int SDL_HAPTIC_POLAR = 0;
+        public const int SDL_HAPTIC_CARTESIAN = 1;
+        public const int SDL_HAPTIC_SPHERICAL = 2;
+        public const uint SDL_HAPTIC_INFINITY = 4294967295U;
 
 
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticDirection
-{
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticDirection
+        {
 
-    Uint8 type;         /**< The type of encoding. */
-    Sint32 dir[3];      /**< The encoded direction. */
+            public byte type;         /**< The type of encoding. */
+            public Int32 dir1;      /**< The encoded direction. */
+            public Int32 dir2;
+            public Int32 dir3;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticConstant
+        {
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticConstant
-{
+            /* Header */
+            public UInt16 type;            /**< ::SDL_HAPTIC_CONSTANT */
+            public SDL_HapticDirection direction;  /**< Direction of the effect. */
 
-    /* Header */
-    Uint16 type;            /**< ::SDL_HAPTIC_CONSTANT */
-    SDL_HapticDirection direction;  /**< Direction of the effect. */
+            /* Replay */
+            public UInt32 length;          /**< Duration of the effect. */
+            public UInt16 delay;           /**< Delay before starting the effect. */
 
-    /* Replay */
-    Uint32 length;          /**< Duration of the effect. */
-    Uint16 delay;           /**< Delay before starting the effect. */
+            /* Trigger */
+            public UInt16 button;          /**< Button that triggers the effect. */
+            public UInt16 interval;        /**< How soon it can be triggered again after button. */
 
-    /* Trigger */
-    Uint16 button;          /**< Button that triggers the effect. */
-    Uint16 interval;        /**< How soon it can be triggered again after button. */
+            /* Constant */
+            public Int16 level;           /**< Strength of the constant effect. */
 
-    /* Constant */
-    Sint16 level;           /**< Strength of the constant effect. */
+            /* Envelope */
+            public UInt16 attack_length;   /**< Duration of the attack. */
+            public UInt16 attack_level;    /**< Level at the start of the attack. */
+            public UInt16 fade_length;     /**< Duration of the fade. */
+            public UInt16 fade_level;      /**< Level at the end of the fade. */
 
-    /* Envelope */
-    Uint16 attack_length;   /**< Duration of the attack. */
-    Uint16 attack_level;    /**< Level at the start of the attack. */
-    Uint16 fade_length;     /**< Duration of the fade. */
-    Uint16 fade_level;      /**< Level at the end of the fade. */
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticPeriodic
+        {
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticPeriodic
-{
-
-    /* Header */
-    Uint16 type;        /**< ::SDL_HAPTIC_SINE, ::SDL_HAPTIC_LEFTRIGHT,
+            /* Header */
+            public UInt16 type;        /**< ::SDL_HAPTIC_SINE, ::SDL_HAPTIC_LEFTRIGHT,
                              ::SDL_HAPTIC_TRIANGLE, ::SDL_HAPTIC_SAWTOOTHUP or
                              ::SDL_HAPTIC_SAWTOOTHDOWN */
-    SDL_HapticDirection direction;  /**< Direction of the effect. */
+            public SDL_HapticDirection direction;  /**< Direction of the effect. */
 
-    /* Replay */
-    Uint32 length;      /**< Duration of the effect. */
-    Uint16 delay;       /**< Delay before starting the effect. */
+            /* Replay */
+            public UInt32 length;      /**< Duration of the effect. */
+            public UInt16 delay;       /**< Delay before starting the effect. */
 
-    /* Trigger */
-    Uint16 button;      /**< Button that triggers the effect. */
-    Uint16 interval;    /**< How soon it can be triggered again after button. */
+            /* Trigger */
+            public UInt16 button;      /**< Button that triggers the effect. */
+            public UInt16 interval;    /**< How soon it can be triggered again after button. */
 
-    /* Periodic */
-    Uint16 period;      /**< Period of the wave. */
-    Sint16 magnitude;   /**< Peak value. */
-    Sint16 offset;      /**< Mean value of the wave. */
-    Uint16 phase;       /**< Horizontal shift given by hundredth of a cycle. */
+            /* Periodic */
+            public UInt16 period;      /**< Period of the wave. */
+            public Int16 magnitude;   /**< Peak value. */
+            public Int16 offset;      /**< Mean value of the wave. */
+            public UInt16 phase;       /**< Horizontal shift given by hundredth of a cycle. */
 
-    /* Envelope */
-    Uint16 attack_length;   /**< Duration of the attack. */
-    Uint16 attack_level;    /**< Level at the start of the attack. */
-    Uint16 fade_length; /**< Duration of the fade. */
-    Uint16 fade_level;  /**< Level at the end of the fade. */
+            /* Envelope */
+            public UInt16 attack_length;   /**< Duration of the attack. */
+            public UInt16 attack_level;    /**< Level at the start of the attack. */
+            public UInt16 fade_length; /**< Duration of the fade. */
+            public UInt16 fade_level;  /**< Level at the end of the fade. */
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticCondition
-{
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticCondition
+        {
 
-    /* Header */
-    Uint16 type;            /**< ::SDL_HAPTIC_SPRING, ::SDL_HAPTIC_DAMPER,
+            /* Header */
+            public UInt16 type;            /**< ::SDL_HAPTIC_SPRING, ::SDL_HAPTIC_DAMPER,
                                  ::SDL_HAPTIC_INERTIA or ::SDL_HAPTIC_FRICTION */
-    SDL_HapticDirection direction;  /**< Direction of the effect - Not used ATM. */
+            public SDL_HapticDirection direction;  /**< Direction of the effect - Not used ATM. */
 
-    /* Replay */
-    Uint32 length;          /**< Duration of the effect. */
-    Uint16 delay;           /**< Delay before starting the effect. */
+            /* Replay */
+            public UInt32 length;          /**< Duration of the effect. */
+            public UInt16 delay;           /**< Delay before starting the effect. */
 
-    /* Trigger */
-    Uint16 button;          /**< Button that triggers the effect. */
-    Uint16 interval;        /**< How soon it can be triggered again after button. */
+            /* Trigger */
+            public UInt16 button;          /**< Button that triggers the effect. */
+            public UInt16 interval;        /**< How soon it can be triggered again after button. */
 
-    /* Condition */
-    Uint16 right_sat[3];    /**< Level when joystick is to the positive side. */
-    Uint16 left_sat[3];     /**< Level when joystick is to the negative side. */
-    Sint16 right_coeff[3];  /**< How fast to increase the force towards the positive side. */
-    Sint16 left_coeff[3];   /**< How fast to increase the force towards the negative side. */
-    Uint16 deadband[3];     /**< Size of the dead zone. */
-    Sint16 center[3];       /**< Position of the dead zone. */
+            /* Condition */
+            public UInt16 right_sat_1;    /**< Level when joystick is to the positive side. */
+            public UInt16 right_sat_2;
+            public UInt16 right_sat_3;
+            public UInt16 left_sat_1;     /**< Level when joystick is to the negative side. */
+            public UInt16 left_sat_2;
+            public UInt16 left_sat_3;
+            public Int16 right_coeff_1;  /**< How fast to increase the force towards the positive side. */
+            public Int16 right_coeff_2;
+            public Int16 right_coeff_3;
+            public Int16 left_coeff_1;   /**< How fast to increase the force towards the negative side. */
+            public Int16 left_coeff_2;
+            public Int16 left_coeff_3;
+            public UInt16 deadband_1;     /**< Size of the dead zone. */
+            public UInt16 deadband_2;
+            public UInt16 deadband_3;
+            public Int16 center_1;       /**< Position of the dead zone. */
+            public Int16 center_2;
+            public Int16 center_3;
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticRamp
+        {
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticRamp
-{
+            /* Header */
+            public UInt16 type;            /**< ::SDL_HAPTIC_RAMP */
+            public SDL_HapticDirection direction;  /**< Direction of the effect. */
 
-    /* Header */
-    Uint16 type;            /**< ::SDL_HAPTIC_RAMP */
-    SDL_HapticDirection direction;  /**< Direction of the effect. */
+            /* Replay */
+            public UInt32 length;          /**< Duration of the effect. */
+            public UInt16 delay;           /**< Delay before starting the effect. */
 
-    /* Replay */
-    Uint32 length;          /**< Duration of the effect. */
-    Uint16 delay;           /**< Delay before starting the effect. */
+            /* Trigger */
+            public UInt16 button;          /**< Button that triggers the effect. */
+            public UInt16 interval;        /**< How soon it can be triggered again after button. */
 
-    /* Trigger */
-    Uint16 button;          /**< Button that triggers the effect. */
-    Uint16 interval;        /**< How soon it can be triggered again after button. */
+            /* Ramp */
+            public Int16 start;           /**< Beginning strength level. */
+            public Int16 end;             /**< Ending strength level. */
 
-    /* Ramp */
-    Sint16 start;           /**< Beginning strength level. */
-    Sint16 end;             /**< Ending strength level. */
+            /* Envelope */
+            public UInt16 attack_length;   /**< Duration of the attack. */
+            public UInt16 attack_level;    /**< Level at the start of the attack. */
+            public UInt16 fade_length;     /**< Duration of the fade. */
+            public UInt16 fade_level;      /**< Level at the end of the fade. */
 
-    /* Envelope */
-    Uint16 attack_length;   /**< Duration of the attack. */
-    Uint16 attack_level;    /**< Level at the start of the attack. */
-    Uint16 fade_length;     /**< Duration of the fade. */
-    Uint16 fade_level;      /**< Level at the end of the fade. */
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticLeftRight
+        {
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticLeftRight
-{
+            /* Header */
+            public UInt16 type;            /**< ::SDL_HAPTIC_LEFTRIGHT */
 
-    /* Header */
-    Uint16 type;            /**< ::SDL_HAPTIC_LEFTRIGHT */
+            /* Replay */
+            public UInt32 length;          /**< Duration of the effect. */
 
-    /* Replay */
-    Uint32 length;          /**< Duration of the effect. */
+            /* Rumble */
+            public UInt16 large_magnitude; /**< Control of the large controller motor. */
+            public UInt16 small_magnitude; /**< Control of the small controller motor. */
 
-    /* Rumble */
-    Uint16 large_magnitude; /**< Control of the large controller motor. */
-    Uint16 small_magnitude; /**< Control of the small controller motor. */
+        }
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_HapticCustom
+        {
 
-}
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_HapticCustom
-{
+            /* Header */
+            public UInt16 type;            /**< ::SDL_HAPTIC_CUSTOM */
+            public SDL_HapticDirection direction;  /**< Direction of the effect. */
 
-    /* Header */
-    Uint16 type;            /**< ::SDL_HAPTIC_CUSTOM */
-    SDL_HapticDirection direction;  /**< Direction of the effect. */
+            /* Replay */
+            public UInt32 length;          /**< Duration of the effect. */
+            public UInt16 delay;           /**< Delay before starting the effect. */
 
-    /* Replay */
-    Uint32 length;          /**< Duration of the effect. */
-    Uint16 delay;           /**< Delay before starting the effect. */
+            /* Trigger */
+            public UInt16 button;          /**< Button that triggers the effect. */
+            public UInt16 interval;        /**< How soon it can be triggered again after button. */
 
-    /* Trigger */
-    Uint16 button;          /**< Button that triggers the effect. */
-    Uint16 interval;        /**< How soon it can be triggered again after button. */
+            /* Custom */
+            public byte channels;         /**< Axes to use, minimum of one. */
+            public UInt16 period;          /**< Sample periods. */
+            public UInt16 samples;         /**< Amount of samples. */
+            public IntPtr data;           /**< Should contain channels*samples items. */
 
-    /* Custom */
-    Uint8 channels;         /**< Axes to use, minimum of one. */
-    Uint16 period;          /**< Sample periods. */
-    Uint16 samples;         /**< Amount of samples. */
-    Uint16 *data;           /**< Should contain channels*samples items. */
+            /* Envelope */
+            public UInt16 attack_length;   /**< Duration of the attack. */
+            public UInt16 attack_level;    /**< Level at the start of the attack. */
+            public UInt16 fade_length;     /**< Duration of the fade. */
+            public UInt16 fade_level;      /**< Level at the end of the fade. */
 
-    /* Envelope */
-    Uint16 attack_length;   /**< Duration of the attack. */
-    Uint16 attack_level;    /**< Level at the start of the attack. */
-    Uint16 fade_length;     /**< Duration of the fade. */
-    Uint16 fade_level;      /**< Level at the end of the fade. */
+        }
 
-}
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_NumHaptics();
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_HapticName(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_HapticOpen(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticOpened(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticIndex(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_MouseIsHaptic();
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_HapticOpenFromMouse();
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickIsHaptic(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_HapticOpenFromJoystick(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_HapticClose(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticNumEffects(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticNumEffectsPlaying(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern uint SDL_HapticQuery(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticNumAxes(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticEffectSupported(IntPtr haptic, IntPtr effect);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticNewEffect(IntPtr haptic, IntPtr effect);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticUpdateEffect(IntPtr haptic, int effect, IntPtr data);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticRunEffect(IntPtr haptic, int effect, UInt32 iterations);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticStopEffect(IntPtr haptic, int effect);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_HapticDestroyEffect(IntPtr haptic, int effect);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticGetEffectStatus(IntPtr haptic, int effect);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticSetGain(IntPtr haptic, int gain);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticSetAutocenter(IntPtr haptic, int autocenter);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticPause(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticUnpause(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticStopAll(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticRumbleSupported(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticRumbleInit(IntPtr haptic);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticRumblePlay(IntPtr haptic, float strength, UInt32 length);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_HapticRumbleStop(IntPtr haptic);
 
-[DllImport("SDL2.dll")]
-public static extern int SDL_NumHaptics();
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_HapticName(int device_index);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_HapticOpen(int device_index);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticOpened(int device_index);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticIndex(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_MouseIsHaptic();
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_HapticOpenFromMouse();
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickIsHaptic(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_HapticOpenFromJoystick(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern void SDL_HapticClose(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticNumEffects(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticNumEffectsPlaying(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern unsigned int SDL_HapticQuery(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticNumAxes(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticEffectSupported(ref SDL_Haptic haptic, ref SDL_HapticEffect effect);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticNewEffect(ref SDL_Haptic haptic, ref SDL_HapticEffect effect);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticUpdateEffect(ref SDL_Haptic haptic, int effect, ref SDL_HapticEffect data);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticRunEffect(ref SDL_Haptic haptic, int effect, Uint32 iterations);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticStopEffect(ref SDL_Haptic haptic, int effect);
-[DllImport("SDL2.dll")]
-public static extern void SDL_HapticDestroyEffect(ref SDL_Haptic haptic, int effect);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticGetEffectStatus(ref SDL_Haptic haptic, int effect);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticSetGain(ref SDL_Haptic haptic, int gain);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticSetAutocenter(ref SDL_Haptic haptic, int autocenter);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticPause(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticUnpause(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticStopAll(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticRumbleSupported(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticRumbleInit(ref SDL_Haptic haptic);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticRumblePlay(ref SDL_Haptic haptic, float strength, Uint32 length);
-[DllImport("SDL2.dll")]
-public static extern int SDL_HapticRumbleStop(ref SDL_Haptic haptic);
-
-}
+    }
 }

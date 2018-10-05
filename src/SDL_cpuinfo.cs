@@ -23,7 +23,7 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
@@ -38,31 +38,31 @@ namespace SDL2
 
 
 
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_GetCPUCount();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_GetCPUCacheLineSize();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasRDTSC();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasAltiVec();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasMMX();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_Has3DNow();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasSSE();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasSSE2();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasSSE3();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasSSE41();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasSSE42();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_bool SDL_HasAVX();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_GetSystemRAM();
 
     }

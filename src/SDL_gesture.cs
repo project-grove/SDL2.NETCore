@@ -23,26 +23,32 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
+using SDL_bool = System.Int32;
+using SDL_TouchID = System.Int64;
+using SDL_FingerID = System.Int64;
+using SDL_GestureID = System.Int64;
+using SDL_RWops = System.IntPtr;
+
 namespace SDL2
 {
-public static class SDL_gesture
-{
+    public static class SDL_gesture
+    {
 
 
 
-[DllImport("SDL2.dll")]
-public static extern int SDL_RecordGesture(SDL_TouchID touchId);
-[DllImport("SDL2.dll")]
-public static extern int SDL_SaveAllDollarTemplates(ref SDL_RWops dst);
-[DllImport("SDL2.dll")]
-public static extern int SDL_SaveDollarTemplate(SDL_GestureID gestureId, ref SDL_RWops dst);
-[DllImport("SDL2.dll")]
-public static extern int SDL_LoadDollarTemplates(SDL_TouchID touchId, ref SDL_RWops src);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_RecordGesture(SDL_TouchID touchId);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_SaveAllDollarTemplates(ref SDL_RWops dst);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_SaveDollarTemplate(SDL_GestureID gestureId, ref SDL_RWops dst);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_LoadDollarTemplates(SDL_TouchID touchId, ref SDL_RWops src);
 
-}
+    }
 }

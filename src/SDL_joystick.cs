@@ -23,76 +23,76 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
+using SDL_bool = System.Int32;
+using SDL_JoystickID = System.Int32;
 namespace SDL2
 {
-public static class SDL_joystick
-{
-public const int SDL_HAT_CENTERED = 0x00;
-public const int SDL_HAT_UP = 0x01;
-public const int SDL_HAT_RIGHT = 0x02;
-public const int SDL_HAT_DOWN = 0x04;
-public const int SDL_HAT_LEFT = 0x08;
-public const int SDL_HAT_RIGHTUP = SDL_HAT_RIGHT|SDL_HAT_UP;
-public const int SDL_HAT_RIGHTDOWN = SDL_HAT_RIGHT|SDL_HAT_DOWN;
-public const int SDL_HAT_LEFTUP = SDL_HAT_LEFT|SDL_HAT_UP;
-public const int SDL_HAT_LEFTDOWN = SDL_HAT_LEFT|SDL_HAT_DOWN;
+    public static class SDL_joystick
+    {
+        public const int SDL_HAT_CENTERED = 0x00;
+        public const int SDL_HAT_UP = 0x01;
+        public const int SDL_HAT_RIGHT = 0x02;
+        public const int SDL_HAT_DOWN = 0x04;
+        public const int SDL_HAT_LEFT = 0x08;
+        public const int SDL_HAT_RIGHTUP = SDL_HAT_RIGHT | SDL_HAT_UP;
+        public const int SDL_HAT_RIGHTDOWN = SDL_HAT_RIGHT | SDL_HAT_DOWN;
+        public const int SDL_HAT_LEFTUP = SDL_HAT_LEFT | SDL_HAT_UP;
+        public const int SDL_HAT_LEFTDOWN = SDL_HAT_LEFT | SDL_HAT_DOWN;
 
 
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_JoystickGUID
-{
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_JoystickGUID
+        {
+            public unsafe fixed byte guid[16];
+        }
 
-    Uint8 data[16];
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_NumJoysticks();
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_JoystickNameForIndex(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_JoystickOpen(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_JoystickName(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_JoystickGUID SDL_JoystickGetDeviceGUID(int device_index);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_JoystickGUID SDL_JoystickGetGUID(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_JoystickGetGUIDString(SDL_JoystickGUID guid, IntPtr pszGUID, int cbGUID);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_JoystickGUID SDL_JoystickGetGUIDFromString(IntPtr pchGUID);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_JoystickGetAttached(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_JoystickID SDL_JoystickInstanceID(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickNumAxes(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickNumBalls(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickNumHats(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickNumButtons(IntPtr joystick);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_JoystickUpdate();
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickEventState(int state);
+        [DllImport("libSDL2.so")]
+        public static extern short SDL_JoystickGetAxis(IntPtr joystick, int axis);
+        [DllImport("libSDL2.so")]
+        public static extern byte SDL_JoystickGetHat(IntPtr joystick, int hat);
+        [DllImport("libSDL2.so")]
+        public static extern int SDL_JoystickGetBall(IntPtr joystick, int ball, ref int dx, ref int dy);
+        [DllImport("libSDL2.so")]
+        public static extern byte SDL_JoystickGetButton(IntPtr joystick, int button);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_JoystickClose(IntPtr joystick);
 
-}
-
-[DllImport("SDL2.dll")]
-public static extern int SDL_NumJoysticks();
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_JoystickNameForIndex(int device_index);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_JoystickOpen(int device_index);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_JoystickName(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern SDL_JoystickGUID SDL_JoystickGetDeviceGUID(int device_index);
-[DllImport("SDL2.dll")]
-public static extern SDL_JoystickGUID SDL_JoystickGetGUID(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern void SDL_JoystickGetGUIDString(SDL_JoystickGUID guid, IntPtr pszGUID, int cbGUID);
-[DllImport("SDL2.dll")]
-public static extern SDL_JoystickGUID SDL_JoystickGetGUIDFromString(IntPtr pchGUID);
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_JoystickGetAttached(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern SDL_JoystickID SDL_JoystickInstanceID(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickNumAxes(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickNumBalls(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickNumHats(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickNumButtons(ref SDL_Joystick joystick);
-[DllImport("SDL2.dll")]
-public static extern void SDL_JoystickUpdate();
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickEventState(int state);
-[DllImport("SDL2.dll")]
-public static extern short SDL_JoystickGetAxis(ref SDL_Joystick joystick, int axis);
-[DllImport("SDL2.dll")]
-public static extern byte SDL_JoystickGetHat(ref SDL_Joystick joystick, int hat);
-[DllImport("SDL2.dll")]
-public static extern int SDL_JoystickGetBall(ref SDL_Joystick joystick, int ball, ref int dx, ref int dy);
-[DllImport("SDL2.dll")]
-public static extern byte SDL_JoystickGetButton(ref SDL_Joystick joystick, int button);
-[DllImport("SDL2.dll")]
-public static extern void SDL_JoystickClose(ref SDL_Joystick joystick);
-
-}
+    }
 }

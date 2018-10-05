@@ -23,7 +23,7 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
@@ -109,57 +109,57 @@ namespace SDL2
 
         }
 
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_GetNumAudioDrivers();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern IntPtr SDL_GetAudioDriver(int index);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_AudioInit(IntPtr driver_name);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_AudioQuit();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern IntPtr SDL_GetCurrentAudioDriver();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_OpenAudio(ref SDL_AudioSpec desired, ref SDL_AudioSpec obtained);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_GetNumAudioDevices(int iscapture);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern IntPtr SDL_GetAudioDeviceName(int index, int iscapture);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_AudioDeviceID SDL_OpenAudioDevice(IntPtr device, int iscapture, ref 
                                                                       SDL_AudioSpec desired, ref SDL_AudioSpec obtained, int
                                                                       allowed_changes);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_AudioStatus SDL_GetAudioStatus();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern SDL_AudioStatus SDL_GetAudioDeviceStatus(SDL_AudioDeviceID dev);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_PauseAudio(int pause_on);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_PauseAudioDevice(SDL_AudioDeviceID dev, int pause_on);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern IntPtr SDL_LoadWAV_RW(ref SDL_RWops src, int freesrc, ref SDL_AudioSpec spec, IntPtr audio_buf, ref uint audio_len);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_FreeWAV(ref byte audio_buf);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_BuildAudioCVT(ref SDL_AudioCVT cvt, SDL_AudioFormat src_format, byte src_channels, int src_rate, SDL_AudioFormat dst_format, byte dst_channels, int dst_rate);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern int SDL_ConvertAudio(ref SDL_AudioCVT cvt);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_MixAudio(ref byte dst, ref byte src, UInt32 len, int volume);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_MixAudioFormat(ref byte dst, ref byte src, SDL_AudioFormat format, UInt32 len, int volume);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_LockAudio();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_LockAudioDevice(SDL_AudioDeviceID dev);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_UnlockAudio();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_UnlockAudioDevice(SDL_AudioDeviceID dev);
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_CloseAudio();
-        [DllImport("SDL2.dll")]
+        [DllImport("libSDL2.so")]
         public static extern void SDL_CloseAudioDevice(SDL_AudioDeviceID dev);
 
     }

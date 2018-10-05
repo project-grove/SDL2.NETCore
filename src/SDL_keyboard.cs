@@ -23,60 +23,63 @@ using static SDL2.SDL_rect;
 using static SDL2.SDL_render;
 using static SDL2.SDL_scancode;
 using static SDL2.SDL_surface;
-using static SDL2.SDL_timer;
+
 using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
+using SDL_Keycode = System.Int32;
+using SDL_bool = System.Int32;
+
 namespace SDL2
 {
-public static class SDL_keyboard
-{
+    public static class SDL_keyboard
+    {
 
 
-[StructLayout(LayoutKind.Sequential)]
-public struct SDL_Keysym
-{
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SDL_Keysym
+        {
 
-    SDL_Scancode scancode;      /**< SDL physical key code - see ::SDL_Scancode for details */
-    SDL_Keycode sym;            /**< SDL virtual key code - see ::SDL_Keycode for details */
-    Uint16 mod;                 /**< current key modifiers */
-    Uint32 unused;
+            SDL_Scancode scancode;      /**< SDL physical key code - see ::SDL_Scancode for details */
+            SDL_Keycode sym;            /**< SDL virtual key code - see ::SDL_Keycode for details */
+            UInt16 mod;                 /**< current key modifiers */
+            UInt32 unused;
 
-}
+        }
 
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_GetKeyboardFocus();
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_GetKeyboardState(ref int numkeys);
-[DllImport("SDL2.dll")]
-public static extern SDL_Keymod SDL_GetModState();
-[DllImport("SDL2.dll")]
-public static extern void SDL_SetModState(SDL_Keymod modstate);
-[DllImport("SDL2.dll")]
-public static extern SDL_Keycode SDL_GetKeyFromScancode(SDL_Scancode scancode);
-[DllImport("SDL2.dll")]
-public static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_GetScancodeName(SDL_Scancode scancode);
-[DllImport("SDL2.dll")]
-public static extern SDL_Scancode SDL_GetScancodeFromName(IntPtr name);
-[DllImport("SDL2.dll")]
-public static extern IntPtr SDL_GetKeyName(SDL_Keycode key);
-[DllImport("SDL2.dll")]
-public static extern SDL_Keycode SDL_GetKeyFromName(IntPtr name);
-[DllImport("SDL2.dll")]
-public static extern void SDL_StartTextInput();
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_IsTextInputActive();
-[DllImport("SDL2.dll")]
-public static extern void SDL_StopTextInput();
-[DllImport("SDL2.dll")]
-public static extern void SDL_SetTextInputRect(ref SDL_Rect rect);
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_HasScreenKeyboardSupport();
-[DllImport("SDL2.dll")]
-public static extern SDL_bool SDL_IsScreenKeyboardShown(ref SDL_Window window);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_GetKeyboardFocus();
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_GetKeyboardState(ref int numkeys);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_Keymod SDL_GetModState();
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_SetModState(SDL_Keymod modstate);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_Keycode SDL_GetKeyFromScancode(SDL_Scancode scancode);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_Scancode SDL_GetScancodeFromKey(SDL_Keycode key);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_GetScancodeName(SDL_Scancode scancode);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_Scancode SDL_GetScancodeFromName(IntPtr name);
+        [DllImport("libSDL2.so")]
+        public static extern IntPtr SDL_GetKeyName(SDL_Keycode key);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_Keycode SDL_GetKeyFromName(IntPtr name);
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_StartTextInput();
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_IsTextInputActive();
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_StopTextInput();
+        [DllImport("libSDL2.so")]
+        public static extern void SDL_SetTextInputRect(ref SDL_Rect rect);
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_HasScreenKeyboardSupport();
+        [DllImport("libSDL2.so")]
+        public static extern SDL_bool SDL_IsScreenKeyboardShown(IntPtr window);
 
-}
+    }
 }
