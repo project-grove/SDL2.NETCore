@@ -139,6 +139,7 @@ namespace SDL2
             public int refresh_rate;           /**< refresh rate (or zero for unspecified) */
             public IntPtr driverdata;           /**< driver-specific data, initialize to 0 */
 
+            public override string ToString() => $"{w}x{h} - {refresh_rate} Hz";
         }
 
         private delegate int SDL_GetNumVideoDrivers__t();
@@ -321,11 +322,11 @@ namespace SDL2
 
         public static void SDL_SetWindowSize(IntPtr window, int w, int h) => s_SDL_SetWindowSize_IntPtr_int_int_t(window, w, h);
 
-        private delegate void SDL_GetWindowSize_IntPtr_int_int_t(IntPtr window, ref int w, ref int h);
+        private delegate void SDL_GetWindowSize_IntPtr_int_int_t(IntPtr window, out int w, out int h);
 
         private static SDL_GetWindowSize_IntPtr_int_int_t s_SDL_GetWindowSize_IntPtr_int_int_t = __LoadFunction<SDL_GetWindowSize_IntPtr_int_int_t>("SDL_GetWindowSize");
 
-        public static void SDL_GetWindowSize(IntPtr window, ref int w, ref int h) => s_SDL_GetWindowSize_IntPtr_int_int_t(window, ref w, ref h);
+        public static void SDL_GetWindowSize(IntPtr window, out int w, out int h) => s_SDL_GetWindowSize_IntPtr_int_int_t(window, out w, out h);
 
         private delegate void SDL_SetWindowMinimumSize_IntPtr_int_int_t(IntPtr window, int min_w, int min_h);
 

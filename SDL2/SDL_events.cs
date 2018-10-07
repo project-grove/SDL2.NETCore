@@ -534,11 +534,20 @@ namespace SDL2
 
         public static void SDL_SetEventFilter(SDL_EventFilter filter, IntPtr userdata) => s_SDL_SetEventFilter_SDL_EventFilter_IntPtr_t(filter, userdata);
 
-        private delegate SDL_bool SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref SDL_EventFilter filter, IntPtr userdata);
+        private delegate SDL_bool SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref SDL_EventFilter filter, out IntPtr userdata);
 
         private static SDL_GetEventFilter_SDL_EventFilter_IntPtr_t s_SDL_GetEventFilter_SDL_EventFilter_IntPtr_t = __LoadFunction<SDL_GetEventFilter_SDL_EventFilter_IntPtr_t>("SDL_GetEventFilter");
 
-        public static SDL_bool SDL_GetEventFilter(ref SDL_EventFilter filter, IntPtr userdata) => s_SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref filter, userdata);
+        static SDL_bool _SDL_GetEventFilter(ref SDL_EventFilter filter, out IntPtr userdata) => s_SDL_GetEventFilter_SDL_EventFilter_IntPtr_t(ref filter, out userdata);
+        public static SDL_bool SDL_GetEventFilter(ref SDL_EventFilter filter, out IntPtr userdata)
+        {
+            var result = _SDL_GetEventFilter(ref filter, out IntPtr userdata_ptr);
+            if (result == 0)
+                userdata = IntPtr.Zero;
+            else
+                userdata = Marshal.PtrToStructure<IntPtr>(userdata_ptr);
+            return result;
+        }
 
         private delegate void SDL_AddEventWatch_SDL_EventFilter_IntPtr_t(SDL_EventFilter filter, IntPtr userdata);
 

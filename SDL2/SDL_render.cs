@@ -102,7 +102,19 @@ namespace SDL2
 
         private static SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t = __LoadFunction<SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t>("SDL_CreateWindowAndRenderer");
 
-        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
+        private static int _SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
+        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer)
+        {
+            var result = _SDL_CreateWindowAndRenderer(width, height, window_flags, out IntPtr window_ptr, out IntPtr r_ptr);
+            if (result != 0) {
+                window = IntPtr.Zero;
+                renderer = IntPtr.Zero;
+                return result;
+            }
+            window = Marshal.PtrToStructure<IntPtr>(window_ptr);
+            renderer = Marshal.PtrToStructure<IntPtr>(r_ptr);
+            return 0;
+        }
 
         private delegate IntPtr SDL_CreateRenderer_IntPtr_int_UInt32_t(IntPtr window, int index, UInt32 flags);
 
@@ -122,11 +134,11 @@ namespace SDL2
 
         public static IntPtr SDL_GetRenderer(IntPtr window) => s_SDL_GetRenderer_IntPtr_t(window);
 
-        private delegate int SDL_GetRendererInfo_IntPtr_IntPtr_t(IntPtr renderer, IntPtr info);
+        private delegate int SDL_GetRendererInfo_IntPtr_IntPtr_t(IntPtr renderer, ref SDL_RendererInfo info);
 
         private static SDL_GetRendererInfo_IntPtr_IntPtr_t s_SDL_GetRendererInfo_IntPtr_IntPtr_t = __LoadFunction<SDL_GetRendererInfo_IntPtr_IntPtr_t>("SDL_GetRendererInfo");
 
-        public static int SDL_GetRendererInfo(IntPtr renderer, IntPtr info) => s_SDL_GetRendererInfo_IntPtr_IntPtr_t(renderer, info);
+        public static int SDL_GetRendererInfo(IntPtr renderer, ref SDL_RendererInfo info) => s_SDL_GetRendererInfo_IntPtr_IntPtr_t(renderer, ref info);
 
         private delegate int SDL_GetRendererOutputSize_IntPtr_int_int_t(IntPtr renderer, ref int w, ref int h);
 

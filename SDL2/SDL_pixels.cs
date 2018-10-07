@@ -39,6 +39,162 @@ namespace SDL2
         public const int SDL_ALPHA_TRANSPARENT = 0;
 
 
+        /** Pixel formats */
+        public const uint SDL_PIXELFORMAT_UNKNOWN = 0x0;
+        public const uint SDL_PIXELFORMAT_INDEX1LSB = 0x11100100;
+        public const uint SDL_PIXELFORMAT_INDEX1MSB = 0x11200100;
+        public const uint SDL_PIXELFORMAT_INDEX4LSB = 0x12100400;
+        public const uint SDL_PIXELFORMAT_INDEX4MSB = 0x12200400;
+        public const uint SDL_PIXELFORMAT_INDEX8 = 0x13000801;
+        public const uint SDL_PIXELFORMAT_RGB332 = 0x14110801;
+        public const uint SDL_PIXELFORMAT_RGB444 = 0x15120c02;
+        public const uint SDL_PIXELFORMAT_RGB555 = 0x15130f02;
+        public const uint SDL_PIXELFORMAT_BGR555 = 0x15530f02;
+        public const uint SDL_PIXELFORMAT_ARGB4444 = 0x15321002;
+        public const uint SDL_PIXELFORMAT_RGBA4444 = 0x15421002;
+        public const uint SDL_PIXELFORMAT_ABGR4444 = 0x15721002;
+        public const uint SDL_PIXELFORMAT_BGRA4444 = 0x15821002;
+        public const uint SDL_PIXELFORMAT_ARGB1555 = 0x15331002;
+        public const uint SDL_PIXELFORMAT_RGBA5551 = 0x15441002;
+        public const uint SDL_PIXELFORMAT_ABGR1555 = 0x15731002;
+        public const uint SDL_PIXELFORMAT_BGRA5551 = 0x15841002;
+        public const uint SDL_PIXELFORMAT_RGB565 = 0x15151002;
+        public const uint SDL_PIXELFORMAT_BGR565 = 0x15551002;
+        public const uint SDL_PIXELFORMAT_RGB24 = 0x17101803;
+        public const uint SDL_PIXELFORMAT_BGR24 = 0x17401803;
+        public const uint SDL_PIXELFORMAT_RGB888 = 0x16161804;
+        public const uint SDL_PIXELFORMAT_RGBX8888 = 0x16261804;
+        public const uint SDL_PIXELFORMAT_BGR888 = 0x16561804;
+        public const uint SDL_PIXELFORMAT_BGRX8888 = 0x16661804;
+        public const uint SDL_PIXELFORMAT_ARGB8888 = 0x16362004;
+        public const uint SDL_PIXELFORMAT_RGBA8888 = 0x16462004;
+        public const uint SDL_PIXELFORMAT_ABGR8888 = 0x16762004;
+        public const uint SDL_PIXELFORMAT_BGRA8888 = 0x16862004;
+        public const uint SDL_PIXELFORMAT_ARGB2101010 = 0x16372004;
+        public const uint SDL_PIXELFORMAT_YV12 = 0x32315659;
+        public const uint SDL_PIXELFORMAT_IYUV = 0x56555949;
+        public const uint SDL_PIXELFORMAT_YUY2 = 0x32595559;
+        public const uint SDL_PIXELFORMAT_UYVY = 0x59565955;
+        public const uint SDL_PIXELFORMAT_YVYU = 0x55595659;
+
+        /** Pixel type. */
+        public enum SDL_PixelType
+        {
+            SDL_PIXELTYPE_UNKNOWN,
+            SDL_PIXELTYPE_INDEX1,
+            SDL_PIXELTYPE_INDEX4,
+            SDL_PIXELTYPE_INDEX8,
+            SDL_PIXELTYPE_PACKED8,
+            SDL_PIXELTYPE_PACKED16,
+            SDL_PIXELTYPE_PACKED32,
+            SDL_PIXELTYPE_ARRAYU8,
+            SDL_PIXELTYPE_ARRAYU16,
+            SDL_PIXELTYPE_ARRAYU32,
+            SDL_PIXELTYPE_ARRAYF16,
+            SDL_PIXELTYPE_ARRAYF32
+        };
+
+        /** Bitmap pixel order, high bit -> low bit. */
+        public enum SDL_BitmapOrder
+        {
+            SDL_BITMAPORDER_NONE,
+            SDL_BITMAPORDER_4321,
+            SDL_BITMAPORDER_1234
+        };
+
+        /** Packed component order, high bit -> low bit. */
+        public enum SDL_PackedOrder
+        {
+            SDL_PACKEDORDER_NONE,
+            SDL_PACKEDORDER_XRGB,
+            SDL_PACKEDORDER_RGBX,
+            SDL_PACKEDORDER_ARGB,
+            SDL_PACKEDORDER_RGBA,
+            SDL_PACKEDORDER_XBGR,
+            SDL_PACKEDORDER_BGRX,
+            SDL_PACKEDORDER_ABGR,
+            SDL_PACKEDORDER_BGRA
+        };
+
+        /** Array component order, low byte -> high byte. */
+        public enum SDL_ArrayOrder
+        {
+            SDL_ARRAYORDER_NONE,
+            SDL_ARRAYORDER_RGB,
+            SDL_ARRAYORDER_RGBA,
+            SDL_ARRAYORDER_ARGB,
+            SDL_ARRAYORDER_BGR,
+            SDL_ARRAYORDER_BGRA,
+            SDL_ARRAYORDER_ABGR
+        };
+
+        /** Packed component layout. */
+        public enum SDL_PackedLayout
+        {
+            SDL_PACKEDLAYOUT_NONE,
+            SDL_PACKEDLAYOUT_332,
+            SDL_PACKEDLAYOUT_4444,
+            SDL_PACKEDLAYOUT_1555,
+            SDL_PACKEDLAYOUT_5551,
+            SDL_PACKEDLAYOUT_565,
+            SDL_PACKEDLAYOUT_8888,
+            SDL_PACKEDLAYOUT_2101010,
+            SDL_PACKEDLAYOUT_1010102
+        };
+
+
+        public static uint SDL_PIXELFLAG(uint format) => ((format >> 28) & 0x0F);
+        public static SDL_PixelType SDL_PIXELTYPE(uint format) => (SDL_PixelType)((format >> 24) & 0x0F);
+        // SDL_BitmapOrder, SDL_PackedOrder or SDL_ArrayOrder
+        public static int SDL_PIXELORDER(uint format) => (int)((format >> 20) & 0x0F);
+        public static SDL_PackedLayout SDL_PIXELLAYOUT(uint format) => (SDL_PackedLayout)((format >> 16) & 0x0F);
+        public static int SDL_BITSPERPIXEL(uint format) => (int)((format >> 8) & 0xFF);
+        public static int SDL_BYTESPERPIXEL(uint format)
+        {
+            if (SDL_ISPIXELFORMAT_FOURCC(format))
+            {
+                switch(format)
+                {
+                    case SDL_PIXELFORMAT_YUY2:
+                    case SDL_PIXELFORMAT_UYVY:
+                    case SDL_PIXELFORMAT_YVYU:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+            return (int)(format & 0xFF);
+        }
+        public static bool SDL_ISPIXELFORMAT_FOURCC(uint format) => ((format) & (SDL_PIXELFLAG(format) != 1 ? 1U : 0U)) > 0;
+        public static bool SDL_ISPIXELFORMAT_ALPHA(uint format)
+        {
+            if (SDL_ISPIXELFORMAT_FOURCC(format)) return false;
+            switch ((SDL_PackedOrder)SDL_PIXELORDER(format))
+            {
+                case SDL_PackedOrder.SDL_PACKEDORDER_ARGB:
+                case SDL_PackedOrder.SDL_PACKEDORDER_ABGR:
+                case SDL_PackedOrder.SDL_PACKEDORDER_BGRA:
+                case SDL_PackedOrder.SDL_PACKEDORDER_RGBA:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool SDL_ISPIXELFORMAT_INDEXED(uint format)
+        {
+            if (SDL_ISPIXELFORMAT_FOURCC(format)) return false;
+            switch (SDL_PIXELTYPE(format))
+            {
+                case SDL_PixelType.SDL_PIXELTYPE_INDEX1:
+                case SDL_PixelType.SDL_PIXELTYPE_INDEX4:
+                case SDL_PixelType.SDL_PIXELTYPE_INDEX8:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_Color
         {
