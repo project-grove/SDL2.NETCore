@@ -102,19 +102,7 @@ namespace SDL2
 
         private static SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t = __LoadFunction<SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t>("SDL_CreateWindowAndRenderer");
 
-        private static int _SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
-        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer)
-        {
-            var result = _SDL_CreateWindowAndRenderer(width, height, window_flags, out IntPtr window_ptr, out IntPtr r_ptr);
-            if (result != 0) {
-                window = IntPtr.Zero;
-                renderer = IntPtr.Zero;
-                return result;
-            }
-            window = Marshal.PtrToStructure<IntPtr>(window_ptr);
-            renderer = Marshal.PtrToStructure<IntPtr>(r_ptr);
-            return 0;
-        }
+        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
 
         private delegate IntPtr SDL_CreateRenderer_IntPtr_int_UInt32_t(IntPtr window, int index, UInt32 flags);
 
