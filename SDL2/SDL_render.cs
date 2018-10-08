@@ -128,11 +128,11 @@ namespace SDL2
 
         public static int SDL_GetRendererInfo(IntPtr renderer, ref SDL_RendererInfo info) => s_SDL_GetRendererInfo_IntPtr_IntPtr_t(renderer, ref info);
 
-        private delegate int SDL_GetRendererOutputSize_IntPtr_int_int_t(IntPtr renderer, ref int w, ref int h);
+        private delegate int SDL_GetRendererOutputSize_IntPtr_int_int_t(IntPtr renderer, out int w, out int h);
 
         private static SDL_GetRendererOutputSize_IntPtr_int_int_t s_SDL_GetRendererOutputSize_IntPtr_int_int_t = __LoadFunction<SDL_GetRendererOutputSize_IntPtr_int_int_t>("SDL_GetRendererOutputSize");
 
-        public static int SDL_GetRendererOutputSize(IntPtr renderer, ref int w, ref int h) => s_SDL_GetRendererOutputSize_IntPtr_int_int_t(renderer, ref w, ref h);
+        public static int SDL_GetRendererOutputSize(IntPtr renderer, out int w, out int h) => s_SDL_GetRendererOutputSize_IntPtr_int_int_t(renderer, out w, out h);
 
         private delegate IntPtr SDL_CreateTexture_IntPtr_UInt32_int_int_int_t(IntPtr renderer, UInt32 format, int access, int w, int h);
 

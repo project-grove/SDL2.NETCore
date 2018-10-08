@@ -568,11 +568,11 @@ namespace SDL2
 
         public static SDL_GLContext SDL_GL_GetCurrentContext() => s_SDL_GL_GetCurrentContext__t();
 
-        private delegate void SDL_GL_GetDrawableSize_IntPtr_int_int_t(IntPtr window, ref int w, ref int h);
+        private delegate void SDL_GL_GetDrawableSize_IntPtr_int_int_t(IntPtr window, out int w, out int h);
 
         private static SDL_GL_GetDrawableSize_IntPtr_int_int_t s_SDL_GL_GetDrawableSize_IntPtr_int_int_t = __LoadFunction<SDL_GL_GetDrawableSize_IntPtr_int_int_t>("SDL_GL_GetDrawableSize");
 
-        public static void SDL_GL_GetDrawableSize(IntPtr window, ref int w, ref int h) => s_SDL_GL_GetDrawableSize_IntPtr_int_int_t(window, ref w, ref h);
+        public static void SDL_GL_GetDrawableSize(IntPtr window, out int w, out int h) => s_SDL_GL_GetDrawableSize_IntPtr_int_int_t(window, out w, out h);
 
         private delegate int SDL_GL_SetSwapInterval_int_t(int interval);
 
