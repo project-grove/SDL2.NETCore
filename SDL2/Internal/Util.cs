@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace SDL2.Internal
@@ -21,6 +22,14 @@ namespace SDL2.Internal
             var p = (byte*)ptr;
             var length = strlen(p);
             return Encoding.UTF8.GetString(p, length);
+        }
+
+        public unsafe static IntPtr StringToHGlobalUTF8(string str)
+        {
+            var bytes = Encoding.UTF8.GetBytes(str);
+            var ptr = Marshal.AllocHGlobal(bytes.Length + 1);
+            Marshal.Copy(bytes, 0, ptr, bytes.Length);
+            return ptr;
         }
     }
 }

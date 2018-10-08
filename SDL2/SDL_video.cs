@@ -302,13 +302,15 @@ namespace SDL2
 
         private static SDL_SetWindowTitle_IntPtr_IntPtr_t s_SDL_SetWindowTitle_IntPtr_IntPtr_t = __LoadFunction<SDL_SetWindowTitle_IntPtr_IntPtr_t>("SDL_SetWindowTitle");
 
-        public static void SDL_SetWindowTitle(IntPtr window, IntPtr title) => s_SDL_SetWindowTitle_IntPtr_IntPtr_t(window, title);
+        private static void _SDL_SetWindowTitle(IntPtr window, IntPtr title) => s_SDL_SetWindowTitle_IntPtr_IntPtr_t(window, title);
+        public static void SDL_SetWindowTitle(IntPtr window, string title) => _SDL_SetWindowTitle(window, Util.StringToHGlobalUTF8(title));
 
         private delegate IntPtr SDL_GetWindowTitle_IntPtr_t(IntPtr window);
 
         private static SDL_GetWindowTitle_IntPtr_t s_SDL_GetWindowTitle_IntPtr_t = __LoadFunction<SDL_GetWindowTitle_IntPtr_t>("SDL_GetWindowTitle");
 
-        public static IntPtr SDL_GetWindowTitle(IntPtr window) => s_SDL_GetWindowTitle_IntPtr_t(window);
+        private static IntPtr _SDL_GetWindowTitle(IntPtr window) => s_SDL_GetWindowTitle_IntPtr_t(window);
+        public static string SDL_GetWindowTitle(IntPtr window) => Util.PtrToStringUTF8(_SDL_GetWindowTitle(window));
 
         private delegate void SDL_SetWindowIcon_IntPtr_SDL_Surface_t(IntPtr window, ref SDL_Surface icon);
 
@@ -334,11 +336,11 @@ namespace SDL2
 
         public static void SDL_SetWindowPosition(IntPtr window, int x, int y) => s_SDL_SetWindowPosition_IntPtr_int_int_t(window, x, y);
 
-        private delegate void SDL_GetWindowPosition_IntPtr_int_int_t(IntPtr window, ref int x, ref int y);
+        private delegate void SDL_GetWindowPosition_IntPtr_int_int_t(IntPtr window, out int x, out int y);
 
         private static SDL_GetWindowPosition_IntPtr_int_int_t s_SDL_GetWindowPosition_IntPtr_int_int_t = __LoadFunction<SDL_GetWindowPosition_IntPtr_int_int_t>("SDL_GetWindowPosition");
 
-        public static void SDL_GetWindowPosition(IntPtr window, ref int x, ref int y) => s_SDL_GetWindowPosition_IntPtr_int_int_t(window, ref x, ref y);
+        public static void SDL_GetWindowPosition(IntPtr window, out int x, out int y) => s_SDL_GetWindowPosition_IntPtr_int_int_t(window, out x, out y);
 
         private delegate void SDL_SetWindowSize_IntPtr_int_int_t(IntPtr window, int w, int h);
 
@@ -358,11 +360,11 @@ namespace SDL2
 
         public static void SDL_SetWindowMinimumSize(IntPtr window, int min_w, int min_h) => s_SDL_SetWindowMinimumSize_IntPtr_int_int_t(window, min_w, min_h);
 
-        private delegate void SDL_GetWindowMinimumSize_IntPtr_int_int_t(IntPtr window, ref int w, ref int h);
+        private delegate void SDL_GetWindowMinimumSize_IntPtr_int_int_t(IntPtr window, out int w, out int h);
 
         private static SDL_GetWindowMinimumSize_IntPtr_int_int_t s_SDL_GetWindowMinimumSize_IntPtr_int_int_t = __LoadFunction<SDL_GetWindowMinimumSize_IntPtr_int_int_t>("SDL_GetWindowMinimumSize");
 
-        public static void SDL_GetWindowMinimumSize(IntPtr window, ref int w, ref int h) => s_SDL_GetWindowMinimumSize_IntPtr_int_int_t(window, ref w, ref h);
+        public static void SDL_GetWindowMinimumSize(IntPtr window, out int w, out int h) => s_SDL_GetWindowMinimumSize_IntPtr_int_int_t(window, out w, out h);
 
         private delegate void SDL_SetWindowMaximumSize_IntPtr_int_int_t(IntPtr window, int max_w, int max_h);
 
@@ -370,11 +372,11 @@ namespace SDL2
 
         public static void SDL_SetWindowMaximumSize(IntPtr window, int max_w, int max_h) => s_SDL_SetWindowMaximumSize_IntPtr_int_int_t(window, max_w, max_h);
 
-        private delegate void SDL_GetWindowMaximumSize_IntPtr_int_int_t(IntPtr window, ref int w, ref int h);
+        private delegate void SDL_GetWindowMaximumSize_IntPtr_int_int_t(IntPtr window, out int w, out int h);
 
         private static SDL_GetWindowMaximumSize_IntPtr_int_int_t s_SDL_GetWindowMaximumSize_IntPtr_int_int_t = __LoadFunction<SDL_GetWindowMaximumSize_IntPtr_int_int_t>("SDL_GetWindowMaximumSize");
 
-        public static void SDL_GetWindowMaximumSize(IntPtr window, ref int w, ref int h) => s_SDL_GetWindowMaximumSize_IntPtr_int_int_t(window, ref w, ref h);
+        public static void SDL_GetWindowMaximumSize(IntPtr window, out int w, out int h) => s_SDL_GetWindowMaximumSize_IntPtr_int_int_t(window, out w, out h);
 
         private delegate void SDL_SetWindowBordered_IntPtr_SDL_bool_t(IntPtr window, SDL_bool bordered);
 
@@ -538,11 +540,11 @@ namespace SDL2
 
         public static int SDL_GL_SetAttribute(SDL_GLattr attr, int value) => s_SDL_GL_SetAttribute_SDL_GLattr_int_t(attr, value);
 
-        private delegate int SDL_GL_GetAttribute_SDL_GLattr_int_t(SDL_GLattr attr, ref int value);
+        private delegate int SDL_GL_GetAttribute_SDL_GLattr_int_t(SDL_GLattr attr, out int value);
 
         private static SDL_GL_GetAttribute_SDL_GLattr_int_t s_SDL_GL_GetAttribute_SDL_GLattr_int_t = __LoadFunction<SDL_GL_GetAttribute_SDL_GLattr_int_t>("SDL_GL_GetAttribute");
 
-        public static int SDL_GL_GetAttribute(SDL_GLattr attr, ref int value) => s_SDL_GL_GetAttribute_SDL_GLattr_int_t(attr, ref value);
+        public static int SDL_GL_GetAttribute(SDL_GLattr attr, out int value) => s_SDL_GL_GetAttribute_SDL_GLattr_int_t(attr, out value);
 
         private delegate SDL_GLContext SDL_GL_CreateContext_IntPtr_t(IntPtr window);
 
