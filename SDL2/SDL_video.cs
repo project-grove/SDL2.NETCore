@@ -31,6 +31,7 @@ using static SDL2.SDL_version;
 using SDL_bool = System.Int32;
 using SDL_GLContext = System.IntPtr;
 using NativeLibraryLoader;
+using SDL2.Internal;
 
 namespace SDL2
 {
@@ -38,6 +39,11 @@ namespace SDL2
     {
         public const int SDL_WINDOWPOS_UNDEFINED_MASK = 0x1FFF0000;
         public const int SDL_WINDOWPOS_CENTERED_MASK = 0x2FFF0000;
+        public static int SDL_WINDOWPOS_UNDEFINED_DISPLAY(int displayIndex) =>
+            SDL_WINDOWPOS_UNDEFINED_MASK | displayIndex;
+        public static int SDL_WINDOWPOS_CENTERED_DISPLAY(int displayIndex) =>
+            SDL_WINDOWPOS_CENTERED_MASK | displayIndex;
+        
 
         public enum SDL_WindowFlags
         {
@@ -140,6 +146,23 @@ namespace SDL2
             public IntPtr driverdata;           /**< driver-specific data, initialize to 0 */
 
             public override string ToString() => $"{w}x{h} - {refresh_rate} Hz";
+
+            public override bool Equals(object obj) => obj is SDL_DisplayMode && this == (SDL_DisplayMode)obj;
+            public override int GetHashCode()
+            {
+                var hash = 17;
+                hash = hash * 23 + format.GetHashCode();
+                hash = hash * 23 + w.GetHashCode();
+                hash = hash * 23 + h.GetHashCode();
+                hash = hash * 23 + refresh_rate.GetHashCode();
+                return hash;
+            }
+            public static bool operator ==(SDL_DisplayMode one, SDL_DisplayMode two) =>
+                one.format == two.format &&
+                    one.w == two.w &&
+                    one.h == two.h &&
+                    one.refresh_rate == two.refresh_rate;
+            public static bool operator !=(SDL_DisplayMode one, SDL_DisplayMode two) => !(one == two);
         }
 
         private delegate int SDL_GetNumVideoDrivers__t();
@@ -182,7 +205,8 @@ namespace SDL2
 
         private static SDL_GetDisplayName_int_t s_SDL_GetDisplayName_int_t = __LoadFunction<SDL_GetDisplayName_int_t>("SDL_GetDisplayName");
 
-        public static IntPtr SDL_GetDisplayName(int displayIndex) => s_SDL_GetDisplayName_int_t(displayIndex);
+        private static IntPtr _SDL_GetDisplayName(int displayIndex) => s_SDL_GetDisplayName_int_t(displayIndex);
+        public static string SDL_GetDisplayName(int displayIndex) => Util.PtrToStringUTF8(_SDL_GetDisplayName(displayIndex));
 
         private delegate int SDL_GetDisplayBounds_int_SDL_Rect_t(int displayIndex, ref SDL_Rect rect);
 
