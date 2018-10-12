@@ -28,7 +28,6 @@ using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
-using SDL_Keycode = System.Int32;
 using SDL_bool = System.Int32;
 using NativeLibraryLoader;
 
