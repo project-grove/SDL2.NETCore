@@ -302,6 +302,10 @@ namespace SDL2
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static unsafe implicit operator SDL_Event(SDL_MouseButtonEvent e) =>
                *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_MouseButtonEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_MouseWheelEvent
