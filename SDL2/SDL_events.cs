@@ -233,7 +233,7 @@ namespace SDL2
             public UInt32 type;                                /**< ::SDL_TEXTEDITING */
             public UInt32 timestamp;
             public UInt32 windowID;                            /**< The window with keyboard focus, if any */
-            public unsafe fixed char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
+            public unsafe fixed byte text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
             public Int32 start;                               /**< The start cursor of selected editing text */
             public Int32 length;                              /**< The length of selected editing text */
 
@@ -252,7 +252,7 @@ namespace SDL2
             public UInt32 type;                              /**< ::SDL_TEXTINPUT */
             public UInt32 timestamp;
             public UInt32 windowID;                          /**< The window with keyboard focus, if any */
-            public unsafe fixed char text[SDL_TEXTINPUTEVENT_TEXT_SIZE];  /**< The input text */
+            public unsafe fixed byte text[SDL_TEXTINPUTEVENT_TEXT_SIZE];  /**< The input text */
 
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             public static unsafe implicit operator SDL_Event(SDL_TextInputEvent e) =>
