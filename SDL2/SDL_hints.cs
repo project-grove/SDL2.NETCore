@@ -31,6 +31,7 @@ using static SDL2.SDL_video;
 using SDL_HintCallback = System.IntPtr;
 using SDL_bool = System.Int32;
 using NativeLibraryLoader;
+using SDL2.Internal;
 
 namespace SDL2
 {
@@ -82,13 +83,38 @@ namespace SDL2
 
         private static SDL_SetHint_IntPtr_IntPtr_t s_SDL_SetHint_IntPtr_IntPtr_t = __LoadFunction<SDL_SetHint_IntPtr_IntPtr_t>("SDL_SetHint");
 
-        public static SDL_bool SDL_SetHint(IntPtr name, IntPtr value) => s_SDL_SetHint_IntPtr_IntPtr_t(name, value);
+        private static SDL_bool _SDL_SetHint(IntPtr name, IntPtr value) => s_SDL_SetHint_IntPtr_IntPtr_t(name, value);
+
+        public static SDL_bool SDL_SetHint(string name, string value)
+        {
+            var n = Util.StringToHGlobalUTF8(name);
+            var v = Util.StringToHGlobalUTF8(value);
+            var result = _SDL_SetHint(n, v);
+            Marshal.FreeHGlobal(n);
+            Marshal.FreeHGlobal(v);
+            return result;
+        }
 
         private delegate IntPtr SDL_GetHint_IntPtr_t(IntPtr name);
 
         private static SDL_GetHint_IntPtr_t s_SDL_GetHint_IntPtr_t = __LoadFunction<SDL_GetHint_IntPtr_t>("SDL_GetHint");
 
-        public static IntPtr SDL_GetHint(IntPtr name) => s_SDL_GetHint_IntPtr_t(name);
+        private static IntPtr _SDL_GetHint(IntPtr name) => s_SDL_GetHint_IntPtr_t(name);
+
+        public static unsafe string SDL_GetHint(string name)
+        {
+            var n = Util.StringToHGlobalUTF8(name);
+            try
+            {
+                var r = _SDL_GetHint(n);
+                if (r == IntPtr.Zero) return null;
+                return Marshal.PtrToStringAnsi(r);
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(n);
+            }
+        }
 
         private delegate void SDL_AddHintCallback_IntPtr_SDL_HintCallback_IntPtr_t(IntPtr name, SDL_HintCallback callback, IntPtr userdata);
 
