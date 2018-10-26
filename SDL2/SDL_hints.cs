@@ -77,7 +77,17 @@ namespace SDL2
 
         private static SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t s_SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t = __LoadFunction<SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t>("SDL_SetHintWithPriority");
 
-        public static SDL_bool SDL_SetHintWithPriority(IntPtr name, IntPtr value, SDL_HintPriority priority) => s_SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t(name, value, priority);
+        private static SDL_bool _SDL_SetHintWithPriority(IntPtr name, IntPtr value, SDL_HintPriority priority) => s_SDL_SetHintWithPriority_IntPtr_IntPtr_SDL_HintPriority_t(name, value, priority);
+
+        public static SDL_bool SDL_SetHintWithPriority(string name, string value, SDL_HintPriority priority)
+        {
+            var n = Util.StringToHGlobalUTF8(name);
+            var v = Util.StringToHGlobalUTF8(value);
+            var result = _SDL_SetHintWithPriority(n, v, priority);
+            Marshal.FreeHGlobal(n);
+            Marshal.FreeHGlobal(v);
+            return result;
+        }
 
         private delegate SDL_bool SDL_SetHint_IntPtr_IntPtr_t(IntPtr name, IntPtr value);
 

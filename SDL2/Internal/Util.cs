@@ -29,6 +29,7 @@ namespace SDL2.Internal
             var bytes = Encoding.UTF8.GetBytes(str);
             var ptr = Marshal.AllocHGlobal(bytes.Length + 1);
             Marshal.Copy(bytes, 0, ptr, bytes.Length);
+            *((byte*)ptr + bytes.Length) = 0;
             return ptr;
         }
     }
