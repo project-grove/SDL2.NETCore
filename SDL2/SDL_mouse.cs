@@ -41,6 +41,16 @@ namespace SDL2
         public const int SDL_BUTTON_X1 = 4;
         public const int SDL_BUTTON_X2 = 5;
 
+        [Flags]
+        public enum SDL_MouseButton : uint
+        {
+            SDL_BUTTON_LEFT = 0x1,
+            SDL_BUTTON_MIDDLE = 0x2,
+            SDL_BUTTON_RIGHT = 0x4,
+            SDL_BUTTON_X1 = 0x8,
+            SDL_BUTTON_X2 = 0xF
+        }
+
         public enum SDL_SystemCursor
         {
 

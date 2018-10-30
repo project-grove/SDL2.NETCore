@@ -28,7 +28,6 @@ using static SDL2.SDL_touch;
 using static SDL2.SDL_version;
 using static SDL2.SDL_video;
 
-using SDL_Keycode = System.Int32;
 using SDL_bool = System.Int32;
 using NativeLibraryLoader;
 
@@ -42,10 +41,10 @@ namespace SDL2
         public struct SDL_Keysym
         {
 
-            SDL_Scancode scancode;      /**< SDL physical key code - see ::SDL_Scancode for details */
-            SDL_Keycode sym;            /**< SDL virtual key code - see ::SDL_Keycode for details */
-            UInt16 mod;                 /**< current key modifiers */
-            UInt32 unused;
+            public SDL_Scancode scancode;      /**< SDL physical key code - see ::SDL_Scancode for details */
+            public SDL_Keycode sym;            /**< SDL virtual key code - see ::SDL_Keycode for details */
+            public UInt16 mod;                 /**< current key modifiers */
+            public UInt32 unused;
 
         }
 

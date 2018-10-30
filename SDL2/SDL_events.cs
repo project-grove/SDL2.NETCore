@@ -35,6 +35,7 @@ using SDL_FingerID = System.Int64;
 using SDL_GestureID = System.Int64;
 using SDL_EventFilter = System.IntPtr;
 using NativeLibraryLoader;
+using System.Runtime.CompilerServices;
 
 namespace SDL2
 {
@@ -59,6 +60,10 @@ namespace SDL2
             public UInt32 type;
             [FieldOffset(4)]
             public unsafe fixed byte data[52];
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public unsafe static implicit operator SDL_CommonEvent(SDL_Event e) =>
+               *((SDL_CommonEvent*)&e);
         }
 
         public enum SDL_EventType
@@ -174,6 +179,9 @@ namespace SDL2
             public UInt32 type;
             public UInt32 timestamp;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public unsafe static implicit operator SDL_Event(SDL_CommonEvent e) =>
+               *((SDL_Event*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_WindowEvent
@@ -189,6 +197,13 @@ namespace SDL2
             public Int32 data1;       /**< event dependent data */
             public Int32 data2;       /**< event dependent data */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_WindowEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_WindowEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_KeyboardEvent
@@ -203,6 +218,13 @@ namespace SDL2
             public byte padding3;
             public SDL_Keysym keysym;  /**< The key that was pressed or released */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_KeyboardEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_KeyboardEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_TextEditingEvent
@@ -211,10 +233,17 @@ namespace SDL2
             public UInt32 type;                                /**< ::SDL_TEXTEDITING */
             public UInt32 timestamp;
             public UInt32 windowID;                            /**< The window with keyboard focus, if any */
-            public unsafe fixed char text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
+            public unsafe fixed byte text[SDL_TEXTEDITINGEVENT_TEXT_SIZE];  /**< The editing text */
             public Int32 start;                               /**< The start cursor of selected editing text */
             public Int32 length;                              /**< The length of selected editing text */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_TextEditingEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_TextEditingEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_TextInputEvent
@@ -223,8 +252,15 @@ namespace SDL2
             public UInt32 type;                              /**< ::SDL_TEXTINPUT */
             public UInt32 timestamp;
             public UInt32 windowID;                          /**< The window with keyboard focus, if any */
-            public unsafe fixed char text[SDL_TEXTINPUTEVENT_TEXT_SIZE];  /**< The input text */
+            public unsafe fixed byte text[SDL_TEXTINPUTEVENT_TEXT_SIZE];  /**< The input text */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_TextInputEvent e) =>
+                *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_TextInputEvent e) =>
+                *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_MouseMotionEvent
@@ -240,6 +276,13 @@ namespace SDL2
             public Int32 xrel;        /**< The relative motion in the X direction */
             public Int32 yrel;        /**< The relative motion in the Y direction */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_MouseMotionEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_MouseMotionEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_MouseButtonEvent
@@ -256,6 +299,13 @@ namespace SDL2
             public Int32 x;           /**< X coordinate, relative to window */
             public Int32 y;           /**< Y coordinate, relative to window */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_MouseButtonEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_MouseButtonEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_MouseWheelEvent
@@ -268,6 +318,13 @@ namespace SDL2
             public Int32 x;           /**< The amount scrolled horizontally, positive to the right and negative to the left */
             public Int32 y;           /**< The amount scrolled vertically, positive away from the user and negative toward the user */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_MouseWheelEvent e) =>
+                *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_MouseWheelEvent e) =>
+                *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_JoyAxisEvent
@@ -283,6 +340,13 @@ namespace SDL2
             public Int16 value;       /**< The axis value (range: -32768 to 32767) */
             public UInt16 padding4;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_JoyAxisEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_JoyAxisEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_JoyBallEvent
@@ -298,6 +362,13 @@ namespace SDL2
             public Int16 xrel;        /**< The relative motion in the X direction */
             public Int16 yrel;        /**< The relative motion in the Y direction */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_JoyBallEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_JoyBallEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_JoyHatEvent
@@ -317,6 +388,13 @@ namespace SDL2
             public byte padding1;
             public byte padding2;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_JoyHatEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_JoyHatEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_JoyButtonEvent
@@ -330,6 +408,13 @@ namespace SDL2
             public byte padding1;
             public byte padding2;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_JoyButtonEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_JoyButtonEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_JoyDeviceEvent
@@ -339,6 +424,13 @@ namespace SDL2
             public UInt32 timestamp;
             public Int32 which;       /**< The joystick device index for the ADDED event, instance id for the REMOVED event */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_JoyDeviceEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_JoyDeviceEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_ControllerAxisEvent
@@ -354,6 +446,13 @@ namespace SDL2
             public Int16 value;       /**< The axis value (range: -32768 to 32767) */
             public UInt16 padding4;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_ControllerAxisEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_ControllerAxisEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_ControllerButtonEvent
@@ -367,6 +466,13 @@ namespace SDL2
             public byte padding1;
             public byte padding2;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_ControllerButtonEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_ControllerButtonEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_ControllerDeviceEvent
@@ -376,6 +482,13 @@ namespace SDL2
             public UInt32 timestamp;
             public Int32 which;       /**< The joystick device index for the ADDED event, instance id for the REMOVED or REMAPPED event */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_ControllerDeviceEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_ControllerDeviceEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_TouchFingerEvent
@@ -391,6 +504,13 @@ namespace SDL2
             public float dy;           /**< Normalized in the range 0...1 */
             public float pressure;     /**< Normalized in the range 0...1 */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_TouchFingerEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_TouchFingerEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_MultiGestureEvent
@@ -406,6 +526,13 @@ namespace SDL2
             public UInt16 numFingers;
             public UInt16 padding;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_MultiGestureEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_MultiGestureEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_DollarGestureEvent
@@ -420,6 +547,13 @@ namespace SDL2
             public float x;            /**< Normalized center of gesture */
             public float y;            /**< Normalized center of gesture */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_DollarGestureEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_DollarGestureEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_DropEvent
@@ -429,6 +563,13 @@ namespace SDL2
             public UInt32 timestamp;
             public IntPtr file;         /**< The file name, which should be freed with SDL_free() */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_DropEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_DropEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_QuitEvent
@@ -437,6 +578,13 @@ namespace SDL2
             public UInt32 type;        /**< ::SDL_QUIT */
             public UInt32 timestamp;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_QuitEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_QuitEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_OSEvent
@@ -445,6 +593,13 @@ namespace SDL2
             public UInt32 type;        /**< ::SDL_QUIT */
             public UInt32 timestamp;
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_OSEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_OSEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_UserEvent
@@ -457,6 +612,13 @@ namespace SDL2
             public IntPtr data1;        /**< User defined data pointer */
             public IntPtr data2;        /**< User defined data pointer */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_UserEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_UserEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
         [StructLayout(LayoutKind.Sequential)]
         public struct SDL_SysWMEvent
@@ -466,6 +628,13 @@ namespace SDL2
             public UInt32 timestamp;
             public IntPtr msg;  /**< driver dependent data, defined in SDL_syswm.h */
 
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_Event(SDL_SysWMEvent e) =>
+               *((SDL_Event*)&e);
+
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            public static unsafe implicit operator SDL_CommonEvent(SDL_SysWMEvent e) =>
+               *((SDL_CommonEvent*)&e);
         }
 
         private delegate void SDL_PumpEvents__t();
@@ -504,11 +673,11 @@ namespace SDL2
 
         public static void SDL_FlushEvents(UInt32 minType, UInt32 maxType) => s_SDL_FlushEvents_UInt32_UInt32_t(minType, maxType);
 
-        private delegate int SDL_PollEvent_SDL_Event_t(ref SDL_Event @event);
+        private delegate int SDL_PollEvent_SDL_Event_t(out SDL_Event @event);
 
         private static SDL_PollEvent_SDL_Event_t s_SDL_PollEvent_SDL_Event_t = __LoadFunction<SDL_PollEvent_SDL_Event_t>("SDL_PollEvent");
 
-        public static int SDL_PollEvent(ref SDL_Event @event) => s_SDL_PollEvent_SDL_Event_t(ref @event);
+        public static int SDL_PollEvent(out SDL_Event @event) => s_SDL_PollEvent_SDL_Event_t(out @event);
 
         private delegate int SDL_WaitEvent_SDL_Event_t(ref SDL_Event @event);
 

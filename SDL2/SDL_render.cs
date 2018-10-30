@@ -102,19 +102,7 @@ namespace SDL2
 
         private static SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t = __LoadFunction<SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t>("SDL_CreateWindowAndRenderer");
 
-        private static int _SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
-        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer)
-        {
-            var result = _SDL_CreateWindowAndRenderer(width, height, window_flags, out IntPtr window_ptr, out IntPtr r_ptr);
-            if (result != 0) {
-                window = IntPtr.Zero;
-                renderer = IntPtr.Zero;
-                return result;
-            }
-            window = Marshal.PtrToStructure<IntPtr>(window_ptr);
-            renderer = Marshal.PtrToStructure<IntPtr>(r_ptr);
-            return 0;
-        }
+        public static int SDL_CreateWindowAndRenderer(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer) => s_SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(width, height, window_flags, out window, out renderer);
 
         private delegate IntPtr SDL_CreateRenderer_IntPtr_int_UInt32_t(IntPtr window, int index, UInt32 flags);
 
@@ -140,11 +128,11 @@ namespace SDL2
 
         public static int SDL_GetRendererInfo(IntPtr renderer, ref SDL_RendererInfo info) => s_SDL_GetRendererInfo_IntPtr_IntPtr_t(renderer, ref info);
 
-        private delegate int SDL_GetRendererOutputSize_IntPtr_int_int_t(IntPtr renderer, ref int w, ref int h);
+        private delegate int SDL_GetRendererOutputSize_IntPtr_int_int_t(IntPtr renderer, out int w, out int h);
 
         private static SDL_GetRendererOutputSize_IntPtr_int_int_t s_SDL_GetRendererOutputSize_IntPtr_int_int_t = __LoadFunction<SDL_GetRendererOutputSize_IntPtr_int_int_t>("SDL_GetRendererOutputSize");
 
-        public static int SDL_GetRendererOutputSize(IntPtr renderer, ref int w, ref int h) => s_SDL_GetRendererOutputSize_IntPtr_int_int_t(renderer, ref w, ref h);
+        public static int SDL_GetRendererOutputSize(IntPtr renderer, out int w, out int h) => s_SDL_GetRendererOutputSize_IntPtr_int_int_t(renderer, out w, out h);
 
         private delegate IntPtr SDL_CreateTexture_IntPtr_UInt32_int_int_int_t(IntPtr renderer, UInt32 format, int access, int w, int h);
 
