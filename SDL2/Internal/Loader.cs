@@ -26,8 +26,9 @@ namespace SDL2.Internal
                 names = new [] { "libSDL2.dylib" };
             } else {
                 names = new [] {
+                    "libSDL2.so",
                     "libSDL2-2.0.so.0",
-                    "libSDL2.so"
+                    "libSDL2-2.0.so.1"
                 };
             }
             return new NativeLibrary(names);
