@@ -272,7 +272,7 @@ namespace SDL2
 
         private static SDL_CreateWindow_IntPtr_int_int_int_int_UInt32_t s_SDL_CreateWindow_IntPtr_int_int_int_int_UInt32_t = __LoadFunction<SDL_CreateWindow_IntPtr_int_int_int_int_UInt32_t>("SDL_CreateWindow");
 
-        public static IntPtr SDL_CreateWindow(IntPtr title, int x, int y, int w, int h, UInt32 flags) => s_SDL_CreateWindow_IntPtr_int_int_int_int_UInt32_t(title, x, y, w, h, flags);
+        public static IntPtr SDL_CreateWindow(string title, int x, int y, int w, int h, UInt32 flags) => s_SDL_CreateWindow_IntPtr_int_int_int_int_UInt32_t(Util.StringToHGlobalUTF8(title), x, y, w, h, flags);
 
         private delegate IntPtr SDL_CreateWindowFrom_IntPtr_t(IntPtr data);
 
