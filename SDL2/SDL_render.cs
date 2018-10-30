@@ -35,8 +35,8 @@ namespace SDL2
 {
     public static class SDL_render
     {
-
-        public enum SDL_RendererFlags
+        [Flags]
+        public enum SDL_RendererFlags : UInt32
         {
 
             SDL_RENDERER_SOFTWARE = 0x00000001,         /**< The renderer is a software fallback */
@@ -78,7 +78,7 @@ namespace SDL2
         {
 
             public IntPtr name;           /**< The name of the renderer */
-            public UInt32 flags;               /**< Supported ::SDL_RendererFlags */
+            public SDL_RendererFlags flags;               /**< Supported ::SDL_RendererFlags */
             public UInt32 num_texture_formats; /**< The number of available texture formats */
             public unsafe fixed UInt32 texture_formats[16]; /**< The available texture formats */
             public int max_texture_width;      /**< The maximimum texture width */
@@ -92,11 +92,11 @@ namespace SDL2
 
         public static int SDL_GetNumRenderDrivers() => s_SDL_GetNumRenderDrivers__t();
 
-        private delegate int SDL_GetRenderDriverInfo_int_IntPtr_t(int index, IntPtr info);
+        private delegate int SDL_GetRenderDriverInfo_int_IntPtr_t(int index, out SDL_RendererInfo info);
 
         private static SDL_GetRenderDriverInfo_int_IntPtr_t s_SDL_GetRenderDriverInfo_int_IntPtr_t = __LoadFunction<SDL_GetRenderDriverInfo_int_IntPtr_t>("SDL_GetRenderDriverInfo");
 
-        public static int SDL_GetRenderDriverInfo(int index, IntPtr info) => s_SDL_GetRenderDriverInfo_int_IntPtr_t(index, info);
+        public static int SDL_GetRenderDriverInfo(int index, out SDL_RendererInfo info) => s_SDL_GetRenderDriverInfo_int_IntPtr_t(index, out info);
 
         private delegate int SDL_CreateWindowAndRenderer_int_int_UInt32_IntPtr_IntPtr_t(int width, int height, UInt32 window_flags, out IntPtr window, out IntPtr renderer);
 
