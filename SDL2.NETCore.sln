@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deps", "deps", "{24C7584F-7FA2-408A-B988-BDFEA9ED0C10}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nativelibraryloader", "nativelibraryloader", "{19F5F93C-6F79-40F9-9200-9E29F4150819}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NativeLibraryLoader", "deps\nativelibraryloader\NativeLibraryLoader\NativeLibraryLoader.csproj", "{3774509D-8B89-41F8-A2F6-523616B3180C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SDL2.NETCore", "SDL2\SDL2.NETCore.csproj", "{A339FBC5-0B0A-4568-BDF6-13325CEE799B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{0F7525E7-63C3-427F-B308-0D1EF86D7948}"
@@ -28,18 +22,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|x64.Build.0 = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Debug|x86.Build.0 = Debug|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|x64.ActiveCfg = Release|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|x64.Build.0 = Release|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|x86.ActiveCfg = Release|Any CPU
-		{3774509D-8B89-41F8-A2F6-523616B3180C}.Release|x86.Build.0 = Release|Any CPU
 		{A339FBC5-0B0A-4568-BDF6-13325CEE799B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A339FBC5-0B0A-4568-BDF6-13325CEE799B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A339FBC5-0B0A-4568-BDF6-13325CEE799B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -66,8 +48,6 @@ Global
 		{CCC29281-61E3-40E4-B17B-774499619FE0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{19F5F93C-6F79-40F9-9200-9E29F4150819} = {24C7584F-7FA2-408A-B988-BDFEA9ED0C10}
-		{3774509D-8B89-41F8-A2F6-523616B3180C} = {19F5F93C-6F79-40F9-9200-9E29F4150819}
 		{CCC29281-61E3-40E4-B17B-774499619FE0} = {0F7525E7-63C3-427F-B308-0D1EF86D7948}
 	EndGlobalSection
 EndGlobal
