@@ -104,17 +104,23 @@ namespace SDL2
 
         }
 
+        private delegate IntPtr SDL_CreateRGBSurface_uint_int_int_int_uint_uint_uint_uint_t(uint flags, int width, int height, int depth, uint rmask, uint gmask, uint bmask, uint amask);
+
+        private static SDL_CreateRGBSurface_uint_int_int_int_uint_uint_uint_uint_t s_SDL_CreateRGBSurface_uint_int_int_int_uint_uint_uint_uint_t = __LoadFunction<SDL_CreateRGBSurface_uint_int_int_int_uint_uint_uint_uint_t>("SDL_CreateRGBSurface");
+
+        public static IntPtr SDL_CreateRGBSurface(uint flags, int width, int height, int depth, uint rmask, uint gmask, uint bmask, uint amask) => s_SDL_CreateRGBSurface_uint_int_int_int_uint_uint_uint_uint_t(flags, width, height, depth, rmask, gmask, bmask, amask);
+
         private delegate IntPtr SDL_CreateRGBSurfaceFrom_IntPtr_int_int_int_int_UInt32_UInt32_UInt32_UInt32_t(IntPtr pixels, int width, int height, int depth, int pitch, UInt32 Rmask, UInt32 Gmask, UInt32 Bmask, UInt32 Amask);
 
         private static SDL_CreateRGBSurfaceFrom_IntPtr_int_int_int_int_UInt32_UInt32_UInt32_UInt32_t s_SDL_CreateRGBSurfaceFrom_IntPtr_int_int_int_int_UInt32_UInt32_UInt32_UInt32_t = __LoadFunction<SDL_CreateRGBSurfaceFrom_IntPtr_int_int_int_int_UInt32_UInt32_UInt32_UInt32_t>("SDL_CreateRGBSurfaceFrom");
 
         public static IntPtr SDL_CreateRGBSurfaceFrom(IntPtr pixels, int width, int height, int depth, int pitch, UInt32 Rmask, UInt32 Gmask, UInt32 Bmask, UInt32 Amask) => s_SDL_CreateRGBSurfaceFrom_IntPtr_int_int_int_int_UInt32_UInt32_UInt32_UInt32_t(pixels, width, height, depth, pitch, Rmask, Gmask, Bmask, Amask);
 
-        private delegate void SDL_FreeSurface_SDL_Surface_t(ref SDL_Surface surface);
+        private delegate void SDL_FreeSurface_SDL_Surface_t(IntPtr surface);
 
         private static SDL_FreeSurface_SDL_Surface_t s_SDL_FreeSurface_SDL_Surface_t = __LoadFunction<SDL_FreeSurface_SDL_Surface_t>("SDL_FreeSurface");
 
-        public static void SDL_FreeSurface(ref SDL_Surface surface) => s_SDL_FreeSurface_SDL_Surface_t(ref surface);
+        public static void SDL_FreeSurface(IntPtr surface) => s_SDL_FreeSurface_SDL_Surface_t(surface);
 
         private delegate int SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t(ref SDL_Surface surface, ref SDL_Palette palette);
 
