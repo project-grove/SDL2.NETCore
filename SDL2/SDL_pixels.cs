@@ -266,11 +266,11 @@ namespace SDL2
 
         public static IntPtr SDL_AllocFormat(UInt32 pixel_format) => s_SDL_AllocFormat_UInt32_t(pixel_format);
 
-        private delegate void SDL_FreeFormat_SDL_PixelFormat_t(ref SDL_PixelFormat format);
+        private delegate void SDL_FreeFormat_SDL_PixelFormat_t(IntPtr format);
 
         private static SDL_FreeFormat_SDL_PixelFormat_t s_SDL_FreeFormat_SDL_PixelFormat_t = __LoadFunction<SDL_FreeFormat_SDL_PixelFormat_t>("SDL_FreeFormat");
 
-        public static void SDL_FreeFormat(ref SDL_PixelFormat format) => s_SDL_FreeFormat_SDL_PixelFormat_t(ref format);
+        public static void SDL_FreeFormat(IntPtr format) => s_SDL_FreeFormat_SDL_PixelFormat_t(format);
 
         private delegate IntPtr SDL_AllocPalette_int_t(int ncolors);
 
@@ -278,47 +278,47 @@ namespace SDL2
 
         public static IntPtr SDL_AllocPalette(int ncolors) => s_SDL_AllocPalette_int_t(ncolors);
 
-        private delegate int SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t(ref SDL_PixelFormat format, ref SDL_Palette palette);
+        private delegate int SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t(IntPtr format, IntPtr palette);
 
         private static SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t s_SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t = __LoadFunction<SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t>("SDL_SetPixelFormatPalette");
 
-        public static int SDL_SetPixelFormatPalette(ref SDL_PixelFormat format, ref SDL_Palette palette) => s_SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t(ref format, ref palette);
+        public static int SDL_SetPixelFormatPalette(IntPtr format, IntPtr palette) => s_SDL_SetPixelFormatPalette_SDL_PixelFormat_SDL_Palette_t(format, palette);
 
-        private delegate int SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t(ref SDL_Palette palette, ref SDL_Color colors, int firstcolor, int ncolors);
+        private delegate int SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t(IntPtr palette, IntPtr colors, int firstcolor, int ncolors);
 
         private static SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t s_SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t = __LoadFunction<SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t>("SDL_SetPaletteColors");
 
-        public static int SDL_SetPaletteColors(ref SDL_Palette palette, ref SDL_Color colors, int firstcolor, int ncolors) => s_SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t(ref palette, ref colors, firstcolor, ncolors);
+        public static int SDL_SetPaletteColors(IntPtr palette, IntPtr colors, int firstcolor, int ncolors) => s_SDL_SetPaletteColors_SDL_Palette_SDL_Color_int_int_t(palette, colors, firstcolor, ncolors);
 
-        private delegate void SDL_FreePalette_SDL_Palette_t(ref SDL_Palette palette);
+        private delegate void SDL_FreePalette_SDL_Palette_t(IntPtr palette);
 
         private static SDL_FreePalette_SDL_Palette_t s_SDL_FreePalette_SDL_Palette_t = __LoadFunction<SDL_FreePalette_SDL_Palette_t>("SDL_FreePalette");
 
-        public static void SDL_FreePalette(ref SDL_Palette palette) => s_SDL_FreePalette_SDL_Palette_t(ref palette);
+        public static void SDL_FreePalette(IntPtr palette) => s_SDL_FreePalette_SDL_Palette_t(palette);
 
-        private delegate uint SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t(ref SDL_PixelFormat format, byte r, byte g, byte b);
+        private delegate uint SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t(IntPtr format, byte r, byte g, byte b);
 
         private static SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t s_SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t = __LoadFunction<SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t>("SDL_MapRGB");
 
-        public static uint SDL_MapRGB(ref SDL_PixelFormat format, byte r, byte g, byte b) => s_SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t(ref format, r, g, b);
+        public static uint SDL_MapRGB(IntPtr format, byte r, byte g, byte b) => s_SDL_MapRGB_SDL_PixelFormat_byte_byte_byte_t(format, r, g, b);
 
-        private delegate uint SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t(ref SDL_PixelFormat format, byte r, byte g, byte b, byte a);
+        private delegate uint SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t(IntPtr format, byte r, byte g, byte b, byte a);
 
         private static SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t s_SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t = __LoadFunction<SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t>("SDL_MapRGBA");
 
-        public static uint SDL_MapRGBA(ref SDL_PixelFormat format, byte r, byte g, byte b, byte a) => s_SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t(ref format, r, g, b, a);
+        public static uint SDL_MapRGBA(IntPtr format, byte r, byte g, byte b, byte a) => s_SDL_MapRGBA_SDL_PixelFormat_byte_byte_byte_byte_t(format, r, g, b, a);
 
-        private delegate void SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t(UInt32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b);
+        private delegate void SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t(UInt32 pixel, IntPtr format, ref byte r, ref byte g, ref byte b);
 
         private static SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t s_SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t = __LoadFunction<SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t>("SDL_GetRGB");
 
-        public static void SDL_GetRGB(UInt32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b) => s_SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t(pixel, ref format, ref r, ref g, ref b);
+        public static void SDL_GetRGB(UInt32 pixel, IntPtr format, ref byte r, ref byte g, ref byte b) => s_SDL_GetRGB_UInt32_SDL_PixelFormat_byte_byte_byte_t(pixel, format, ref r, ref g, ref b);
 
-        private delegate void SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t(UInt32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b, ref byte a);
+        private delegate void SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t(UInt32 pixel, IntPtr format, ref byte r, ref byte g, ref byte b, ref byte a);
 
         private static SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t s_SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t = __LoadFunction<SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t>("SDL_GetRGBA");
 
-        public static void SDL_GetRGBA(UInt32 pixel, ref SDL_PixelFormat format, ref byte r, ref byte g, ref byte b, ref byte a) => s_SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t(pixel, ref format, ref r, ref g, ref b, ref a);
+        public static void SDL_GetRGBA(UInt32 pixel, IntPtr format, ref byte r, ref byte g, ref byte b, ref byte a) => s_SDL_GetRGBA_UInt32_SDL_PixelFormat_byte_byte_byte_byte_t(pixel, format, ref r, ref g, ref b, ref a);
 
         private delegate void SDL_CalculateGammaRamp_float_ushort_t(float gamma, ref ushort ramp);
 
