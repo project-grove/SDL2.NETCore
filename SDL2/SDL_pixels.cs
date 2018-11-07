@@ -153,7 +153,7 @@ namespace SDL2
         {
             if (SDL_ISPIXELFORMAT_FOURCC(format))
             {
-                switch(format)
+                switch (format)
                 {
                     case SDL_PIXELFORMAT_YUY2:
                     case SDL_PIXELFORMAT_UYVY:
@@ -169,16 +169,33 @@ namespace SDL2
         public static bool SDL_ISPIXELFORMAT_ALPHA(uint format)
         {
             if (SDL_ISPIXELFORMAT_FOURCC(format)) return false;
-            switch ((SDL_PackedOrder)SDL_PIXELORDER(format))
+            if (SDL_ISPIXELFORMAT_PACKED(format))
             {
-                case SDL_PackedOrder.SDL_PACKEDORDER_ARGB:
-                case SDL_PackedOrder.SDL_PACKEDORDER_ABGR:
-                case SDL_PackedOrder.SDL_PACKEDORDER_BGRA:
-                case SDL_PackedOrder.SDL_PACKEDORDER_RGBA:
-                    return true;
-                default:
-                    return false;
+                switch ((SDL_PackedOrder)SDL_PIXELORDER(format))
+                {
+                    case SDL_PackedOrder.SDL_PACKEDORDER_ARGB:
+                    case SDL_PackedOrder.SDL_PACKEDORDER_ABGR:
+                    case SDL_PackedOrder.SDL_PACKEDORDER_BGRA:
+                    case SDL_PackedOrder.SDL_PACKEDORDER_RGBA:
+                        return true;
+                    default:
+                        return false;
+                }
             }
+            else if (SDL_ISPIXELFORMAT_ARRAY(format))
+            {
+                switch ((SDL_ArrayOrder)SDL_PIXELORDER(format))
+                {
+                    case SDL_ArrayOrder.SDL_ARRAYORDER_ABGR:
+                    case SDL_ArrayOrder.SDL_ARRAYORDER_ARGB:
+                    case SDL_ArrayOrder.SDL_ARRAYORDER_BGRA:
+                    case SDL_ArrayOrder.SDL_ARRAYORDER_RGBA:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+            return false;
         }
 
         public static bool SDL_ISPIXELFORMAT_INDEXED(uint format)
@@ -189,6 +206,36 @@ namespace SDL2
                 case SDL_PixelType.SDL_PIXELTYPE_INDEX1:
                 case SDL_PixelType.SDL_PIXELTYPE_INDEX4:
                 case SDL_PixelType.SDL_PIXELTYPE_INDEX8:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool SDL_ISPIXELFORMAT_PACKED(uint format)
+        {
+            if (SDL_ISPIXELFORMAT_FOURCC(format)) return false;
+            switch (SDL_PIXELTYPE(format))
+            {
+                case SDL_PixelType.SDL_PIXELTYPE_PACKED8:
+                case SDL_PixelType.SDL_PIXELTYPE_PACKED16:
+                case SDL_PixelType.SDL_PIXELTYPE_PACKED32:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool SDL_ISPIXELFORMAT_ARRAY(uint format)
+        {
+            if (SDL_ISPIXELFORMAT_FOURCC(format)) return false;
+            switch (SDL_PIXELTYPE(format))
+            {
+                case SDL_PixelType.SDL_PIXELTYPE_ARRAYU8:
+                case SDL_PixelType.SDL_PIXELTYPE_ARRAYU16:
+                case SDL_PixelType.SDL_PIXELTYPE_ARRAYU32:
+                case SDL_PixelType.SDL_PIXELTYPE_ARRAYF16:
+                case SDL_PixelType.SDL_PIXELTYPE_ARRAYF32:
                     return true;
                 default:
                     return false;
