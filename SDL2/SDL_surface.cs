@@ -40,6 +40,8 @@ namespace SDL2
         public const int SDL_PREALLOC = 0x00000001;
         public const int SDL_RLEACCEL = 0x00000002;
         public const int SDL_DONTFREE = 0x00000004;
+        public static bool SDL_MUSTLOCK(SDL_Surface S) =>
+            ((S.flags & SDL_RLEACCEL) != 0);
 
         [StructLayout(LayoutKind.Sequential)]
         unsafe struct SDL_BlitInfo
@@ -122,23 +124,23 @@ namespace SDL2
 
         public static void SDL_FreeSurface(IntPtr surface) => s_SDL_FreeSurface_SDL_Surface_t(surface);
 
-        private delegate int SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t(ref SDL_Surface surface, ref SDL_Palette palette);
+        private delegate int SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t(IntPtr surface, ref SDL_Palette palette);
 
         private static SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t s_SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t = __LoadFunction<SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t>("SDL_SetSurfacePalette");
 
-        public static int SDL_SetSurfacePalette(ref SDL_Surface surface, ref SDL_Palette palette) => s_SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t(ref surface, ref palette);
+        public static int SDL_SetSurfacePalette(IntPtr surface, ref SDL_Palette palette) => s_SDL_SetSurfacePalette_SDL_Surface_SDL_Palette_t(surface, ref palette);
 
-        private delegate int SDL_LockSurface_SDL_Surface_t(ref SDL_Surface surface);
+        private delegate int SDL_LockSurface_SDL_Surface_t(IntPtr surface);
 
         private static SDL_LockSurface_SDL_Surface_t s_SDL_LockSurface_SDL_Surface_t = __LoadFunction<SDL_LockSurface_SDL_Surface_t>("SDL_LockSurface");
 
-        public static int SDL_LockSurface(ref SDL_Surface surface) => s_SDL_LockSurface_SDL_Surface_t(ref surface);
+        public static int SDL_LockSurface(IntPtr surface) => s_SDL_LockSurface_SDL_Surface_t(surface);
 
-        private delegate void SDL_UnlockSurface_SDL_Surface_t(ref SDL_Surface surface);
+        private delegate void SDL_UnlockSurface_SDL_Surface_t(IntPtr surface);
 
         private static SDL_UnlockSurface_SDL_Surface_t s_SDL_UnlockSurface_SDL_Surface_t = __LoadFunction<SDL_UnlockSurface_SDL_Surface_t>("SDL_UnlockSurface");
 
-        public static void SDL_UnlockSurface(ref SDL_Surface surface) => s_SDL_UnlockSurface_SDL_Surface_t(ref surface);
+        public static void SDL_UnlockSurface(IntPtr surface) => s_SDL_UnlockSurface_SDL_Surface_t(surface);
 
         private delegate IntPtr SDL_LoadBMP_RW_SDL_RWops_int_t(ref SDL_RWops src, int freesrc);
 
@@ -146,71 +148,71 @@ namespace SDL2
 
         public static IntPtr SDL_LoadBMP_RW(ref SDL_RWops src, int freesrc) => s_SDL_LoadBMP_RW_SDL_RWops_int_t(ref src, freesrc);
 
-        private delegate int SDL_SetSurfaceRLE_SDL_Surface_int_t(ref SDL_Surface surface, int flag);
+        private delegate int SDL_SetSurfaceRLE_SDL_Surface_int_t(IntPtr surface, int flag);
 
         private static SDL_SetSurfaceRLE_SDL_Surface_int_t s_SDL_SetSurfaceRLE_SDL_Surface_int_t = __LoadFunction<SDL_SetSurfaceRLE_SDL_Surface_int_t>("SDL_SetSurfaceRLE");
 
-        public static int SDL_SetSurfaceRLE(ref SDL_Surface surface, int flag) => s_SDL_SetSurfaceRLE_SDL_Surface_int_t(ref surface, flag);
+        public static int SDL_SetSurfaceRLE(IntPtr surface, int flag) => s_SDL_SetSurfaceRLE_SDL_Surface_int_t(surface, flag);
 
-        private delegate int SDL_SetColorKey_SDL_Surface_int_UInt32_t(ref SDL_Surface surface, int flag, UInt32 key);
+        private delegate int SDL_SetColorKey_SDL_Surface_int_UInt32_t(IntPtr surface, int flag, UInt32 key);
 
         private static SDL_SetColorKey_SDL_Surface_int_UInt32_t s_SDL_SetColorKey_SDL_Surface_int_UInt32_t = __LoadFunction<SDL_SetColorKey_SDL_Surface_int_UInt32_t>("SDL_SetColorKey");
 
-        public static int SDL_SetColorKey(ref SDL_Surface surface, int flag, UInt32 key) => s_SDL_SetColorKey_SDL_Surface_int_UInt32_t(ref surface, flag, key);
+        public static int SDL_SetColorKey(IntPtr surface, int flag, UInt32 key) => s_SDL_SetColorKey_SDL_Surface_int_UInt32_t(surface, flag, key);
 
-        private delegate int SDL_GetColorKey_SDL_Surface_uint_t(ref SDL_Surface surface, ref uint key);
+        private delegate int SDL_GetColorKey_SDL_Surface_uint_t(IntPtr surface, ref uint key);
 
         private static SDL_GetColorKey_SDL_Surface_uint_t s_SDL_GetColorKey_SDL_Surface_uint_t = __LoadFunction<SDL_GetColorKey_SDL_Surface_uint_t>("SDL_GetColorKey");
 
-        public static int SDL_GetColorKey(ref SDL_Surface surface, ref uint key) => s_SDL_GetColorKey_SDL_Surface_uint_t(ref surface, ref key);
+        public static int SDL_GetColorKey(IntPtr surface, ref uint key) => s_SDL_GetColorKey_SDL_Surface_uint_t(surface, ref key);
 
-        private delegate int SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(ref SDL_Surface surface, byte r, byte g, byte b);
+        private delegate int SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(IntPtr surface, byte r, byte g, byte b);
 
         private static SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t s_SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t = __LoadFunction<SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t>("SDL_SetSurfaceColorMod");
 
-        public static int SDL_SetSurfaceColorMod(ref SDL_Surface surface, byte r, byte g, byte b) => s_SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(ref surface, r, g, b);
+        public static int SDL_SetSurfaceColorMod(IntPtr surface, byte r, byte g, byte b) => s_SDL_SetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(surface, r, g, b);
 
-        private delegate int SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(ref SDL_Surface surface, ref byte r, ref byte g, ref byte b);
+        private delegate int SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(IntPtr surface, ref byte r, ref byte g, ref byte b);
 
         private static SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t s_SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t = __LoadFunction<SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t>("SDL_GetSurfaceColorMod");
 
-        public static int SDL_GetSurfaceColorMod(ref SDL_Surface surface, ref byte r, ref byte g, ref byte b) => s_SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(ref surface, ref r, ref g, ref b);
+        public static int SDL_GetSurfaceColorMod(IntPtr surface, ref byte r, ref byte g, ref byte b) => s_SDL_GetSurfaceColorMod_SDL_Surface_byte_byte_byte_t(surface, ref r, ref g, ref b);
 
-        private delegate int SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t(ref SDL_Surface surface, byte alpha);
+        private delegate int SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t(IntPtr surface, byte alpha);
 
         private static SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t s_SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t = __LoadFunction<SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t>("SDL_SetSurfaceAlphaMod");
 
-        public static int SDL_SetSurfaceAlphaMod(ref SDL_Surface surface, byte alpha) => s_SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t(ref surface, alpha);
+        public static int SDL_SetSurfaceAlphaMod(IntPtr surface, byte alpha) => s_SDL_SetSurfaceAlphaMod_SDL_Surface_byte_t(surface, alpha);
 
-        private delegate int SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t(ref SDL_Surface surface, ref byte alpha);
+        private delegate int SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t(IntPtr surface, ref byte alpha);
 
         private static SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t s_SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t = __LoadFunction<SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t>("SDL_GetSurfaceAlphaMod");
 
-        public static int SDL_GetSurfaceAlphaMod(ref SDL_Surface surface, ref byte alpha) => s_SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t(ref surface, ref alpha);
+        public static int SDL_GetSurfaceAlphaMod(IntPtr surface, ref byte alpha) => s_SDL_GetSurfaceAlphaMod_SDL_Surface_byte_t(surface, ref alpha);
 
-        private delegate int SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(ref SDL_Surface surface, SDL_BlendMode blendMode);
+        private delegate int SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(IntPtr surface, SDL_BlendMode blendMode);
 
         private static SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t s_SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t = __LoadFunction<SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t>("SDL_SetSurfaceBlendMode");
 
-        public static int SDL_SetSurfaceBlendMode(ref SDL_Surface surface, SDL_BlendMode blendMode) => s_SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(ref surface, blendMode);
+        public static int SDL_SetSurfaceBlendMode(IntPtr surface, SDL_BlendMode blendMode) => s_SDL_SetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(surface, blendMode);
 
-        private delegate int SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(ref SDL_Surface surface, ref SDL_BlendMode blendMode);
+        private delegate int SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(IntPtr surface, ref SDL_BlendMode blendMode);
 
         private static SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t s_SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t = __LoadFunction<SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t>("SDL_GetSurfaceBlendMode");
 
-        public static int SDL_GetSurfaceBlendMode(ref SDL_Surface surface, ref SDL_BlendMode blendMode) => s_SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(ref surface, ref blendMode);
+        public static int SDL_GetSurfaceBlendMode(IntPtr surface, ref SDL_BlendMode blendMode) => s_SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(surface, ref blendMode);
 
-        private delegate SDL_bool SDL_SetClipRect_SDL_Surface_SDL_Rect_t(ref SDL_Surface surface, ref SDL_Rect rect);
+        private delegate SDL_bool SDL_SetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, ref SDL_Rect rect);
 
         private static SDL_SetClipRect_SDL_Surface_SDL_Rect_t s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_SetClipRect_SDL_Surface_SDL_Rect_t>("SDL_SetClipRect");
 
-        public static SDL_bool SDL_SetClipRect(ref SDL_Surface surface, ref SDL_Rect rect) => s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t(ref surface, ref rect);
+        public static SDL_bool SDL_SetClipRect(IntPtr surface, ref SDL_Rect rect) => s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t(surface, ref rect);
 
-        private delegate void SDL_GetClipRect_SDL_Surface_SDL_Rect_t(ref SDL_Surface surface, ref SDL_Rect rect);
+        private delegate void SDL_GetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, ref SDL_Rect rect);
 
         private static SDL_GetClipRect_SDL_Surface_SDL_Rect_t s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_GetClipRect_SDL_Surface_SDL_Rect_t>("SDL_GetClipRect");
 
-        public static void SDL_GetClipRect(ref SDL_Surface surface, ref SDL_Rect rect) => s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t(ref surface, ref rect);
+        public static void SDL_GetClipRect(IntPtr surface, ref SDL_Rect rect) => s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t(surface, ref rect);
 
         private delegate int SDL_ConvertPixels_int_int_UInt32_IntPtr_int_UInt32_IntPtr_int_t(int width, int height, UInt32 src_format, IntPtr src, int src_pitch, UInt32 dst_format, IntPtr dst, int dst_pitch);
 
@@ -218,11 +220,48 @@ namespace SDL2
 
         public static int SDL_ConvertPixels(int width, int height, UInt32 src_format, IntPtr src, int src_pitch, UInt32 dst_format, IntPtr dst, int dst_pitch) => s_SDL_ConvertPixels_int_int_UInt32_IntPtr_int_UInt32_IntPtr_int_t(width, height, src_format, src, src_pitch, dst_format, dst, dst_pitch);
 
-        private delegate int SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(ref SDL_Surface src, ref SDL_Rect srcrect, ref SDL_Surface dst, ref SDL_Rect dstrect);
+        private delegate int SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+
+        private delegate int SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+
+        private static SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t>("SDL_BlitScaled");
+
+        public static int SDL_BlitScaled(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+
+        private delegate int SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+
+        private static SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t>("SDL_LowerBlitScaled");
+
+        public static int SDL_LowerBlitScaled(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+
+        private delegate int SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(IntPtr dst, ref SDL_Rect rect, UInt32 color);
+
+        private static SDL_FillRect_IntPtr_SDL_Rect_UInt32_t s_SDL_FillRect_IntPtr_SDL_Rect_UInt32_t = __LoadFunction<SDL_FillRect_IntPtr_SDL_Rect_UInt32_t>("SDL_FillRect");
+
+        public static int SDL_FillRect(IntPtr dst, ref SDL_Rect rect, UInt32 color) => s_SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(dst, ref rect, color);
+
+        private delegate int SDL_FillRects_IntPtr_IntPtr_int_UInt32_t(IntPtr dst, IntPtr rects, int count, UInt32 color);
+
+        private static SDL_FillRects_IntPtr_IntPtr_int_UInt32_t s_SDL_FillRects_IntPtr_IntPtr_int_UInt32_t = __LoadFunction<SDL_FillRects_IntPtr_IntPtr_int_UInt32_t>("SDL_FillRects");
+
+        public static int SDL_FillRects(IntPtr dst, IntPtr rects, int count, UInt32 color) => s_SDL_FillRects_IntPtr_IntPtr_int_UInt32_t(dst, rects, count, color);
 
         private static SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t>("SDL_SoftStretch");
 
-        public static int SDL_SoftStretch(ref SDL_Surface src, ref SDL_Rect srcrect, ref SDL_Surface dst, ref SDL_Rect dstrect) => s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(ref src, ref srcrect, ref dst, ref dstrect);
+        public static int SDL_SoftStretch(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+
+        private delegate IntPtr SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t(IntPtr src, IntPtr fmt, UInt32 flags);
+
+        private static SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t s_SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t = __LoadFunction<SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t>("SDL_ConvertSurface");
+
+        public static IntPtr SDL_ConvertSurface(IntPtr src, IntPtr fmt, UInt32 flags) => s_SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t(src, fmt, flags);
+
+        private delegate IntPtr SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t(IntPtr src, UInt32 fmt, UInt32 flags);
+
+        private static SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t s_SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t = __LoadFunction<SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t>("SDL_ConvertSurfaceFormat");
+
+        public static IntPtr SDL_ConvertSurfaceFormat(IntPtr src, UInt32 fmt, UInt32 flags) => s_SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t(src, fmt, flags);
+
         private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }
