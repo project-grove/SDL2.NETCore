@@ -43,7 +43,7 @@ namespace SDL2
             SDL_WINDOWPOS_UNDEFINED_MASK | displayIndex;
         public static int SDL_WINDOWPOS_CENTERED_DISPLAY(int displayIndex) =>
             SDL_WINDOWPOS_CENTERED_MASK | displayIndex;
-        
+
 
         public enum SDL_WindowFlags
         {
@@ -599,7 +599,26 @@ namespace SDL2
         private static SDL_GL_DeleteContext_SDL_GLContext_t s_SDL_GL_DeleteContext_SDL_GLContext_t = __LoadFunction<SDL_GL_DeleteContext_SDL_GLContext_t>("SDL_GL_DeleteContext");
 
         public static void SDL_GL_DeleteContext(SDL_GLContext context) => s_SDL_GL_DeleteContext_SDL_GLContext_t(context);
+
+        /* X11 ONLY */
+        private delegate int SDL_SetWindowInputFocus_IntPtr_t(IntPtr window);
+        private static SDL_SetWindowInputFocus_IntPtr_t s_SDL_SetWindowInputFocus_IntPtr_t;
+        public static int SDL_SetWindowInputFocus(IntPtr window) => s_SDL_SetWindowInputFocus_IntPtr_t(window);
+
         private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
+
+        static SDL_video()
+        {
+
+            try
+            {
+                s_SDL_SetWindowInputFocus_IntPtr_t = __LoadFunction<SDL_SetWindowInputFocus_IntPtr_t>("SDL_SetWindowInputFocus");
+            }
+            catch (Exception ex)
+            {
+                s_SDL_SetWindowInputFocus_IntPtr_t = p => { return 0; };
+            }
+        }
     }
 }
 
