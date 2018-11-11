@@ -607,9 +607,9 @@ namespace SDL2
 
         private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
 
+#pragma warning disable
         static SDL_video()
         {
-
             try
             {
                 s_SDL_SetWindowInputFocus_IntPtr_t = __LoadFunction<SDL_SetWindowInputFocus_IntPtr_t>("SDL_SetWindowInputFocus");
@@ -619,6 +619,7 @@ namespace SDL2
                 s_SDL_SetWindowInputFocus_IntPtr_t = p => { return 0; };
             }
         }
+#pragma warning enable
     }
 }
 

@@ -224,7 +224,7 @@ namespace SDL2
 
         private delegate int SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
 
-        private static SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t>("SDL_BlitScaled");
+        private static SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t;
 
         public static int SDL_BlitScaled(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
 
@@ -263,6 +263,23 @@ namespace SDL2
         public static IntPtr SDL_ConvertSurfaceFormat(IntPtr src, UInt32 fmt, UInt32 flags) => s_SDL_ConvertSurfaceFormat_IntPtr_UInt32_UInt32_t(src, fmt, flags);
 
         private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
+
+#pragma warning disable
+        static SDL_surface()
+        {
+            var blitScaled = new[] { "BlitScaled", "UpperBlitScaled" };
+            foreach (var name in blitScaled)
+            {
+                try
+                {
+                    s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t =
+                        __LoadFunction<SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t>(name);
+                    break;
+                }
+                catch (Exception ex) { }
+            }
+        }
+#pragma warning enable
     }
 }
 
