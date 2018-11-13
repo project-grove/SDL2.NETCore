@@ -202,17 +202,17 @@ namespace SDL2
 
         public static int SDL_GetSurfaceBlendMode(IntPtr surface, ref SDL_BlendMode blendMode) => s_SDL_GetSurfaceBlendMode_SDL_Surface_SDL_BlendMode_t(surface, ref blendMode);
 
-        private delegate SDL_bool SDL_SetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, ref SDL_Rect rect);
+        private unsafe delegate SDL_bool SDL_SetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, SDL_Rect* rect);
 
         private static SDL_SetClipRect_SDL_Surface_SDL_Rect_t s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_SetClipRect_SDL_Surface_SDL_Rect_t>("SDL_SetClipRect");
 
-        public static SDL_bool SDL_SetClipRect(IntPtr surface, ref SDL_Rect rect) => s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t(surface, ref rect);
+        public static unsafe SDL_bool SDL_SetClipRect(IntPtr surface, SDL_Rect* rect) => s_SDL_SetClipRect_SDL_Surface_SDL_Rect_t(surface, rect);
 
-        private delegate void SDL_GetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, ref SDL_Rect rect);
+        private unsafe delegate void SDL_GetClipRect_SDL_Surface_SDL_Rect_t(IntPtr surface, SDL_Rect* rect);
 
         private static SDL_GetClipRect_SDL_Surface_SDL_Rect_t s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_GetClipRect_SDL_Surface_SDL_Rect_t>("SDL_GetClipRect");
 
-        public static void SDL_GetClipRect(IntPtr surface, ref SDL_Rect rect) => s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t(surface, ref rect);
+        public unsafe static void SDL_GetClipRect(IntPtr surface, SDL_Rect* rect) => s_SDL_GetClipRect_SDL_Surface_SDL_Rect_t(surface, rect);
 
         private delegate int SDL_ConvertPixels_int_int_UInt32_IntPtr_int_UInt32_IntPtr_int_t(int width, int height, UInt32 src_format, IntPtr src, int src_pitch, UInt32 dst_format, IntPtr dst, int dst_pitch);
 
@@ -220,25 +220,25 @@ namespace SDL2
 
         public static int SDL_ConvertPixels(int width, int height, UInt32 src_format, IntPtr src, int src_pitch, UInt32 dst_format, IntPtr dst, int dst_pitch) => s_SDL_ConvertPixels_int_int_UInt32_IntPtr_int_UInt32_IntPtr_int_t(width, height, src_format, src, src_pitch, dst_format, dst, dst_pitch);
 
-        private delegate int SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+        private unsafe delegate int SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect);
 
-        private delegate int SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+        private unsafe delegate int SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect);
 
         private static SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t;
 
-        public static int SDL_BlitScaled(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+        public unsafe static int SDL_BlitScaled(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect) => s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, srcrect, dst, dstrect);
 
-        private delegate int SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect);
+        private unsafe delegate int SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect);
 
         private static SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t s_SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t>("SDL_LowerBlitScaled");
 
-        public static int SDL_LowerBlitScaled(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+        public unsafe static int SDL_LowerBlitScaled(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect) => s_SDL_LowerBlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t(src, srcrect, dst, dstrect);
 
-        private delegate int SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(IntPtr dst, ref SDL_Rect rect, UInt32 color);
+        private unsafe delegate int SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(IntPtr dst, SDL_Rect* rect, UInt32 color);
 
         private static SDL_FillRect_IntPtr_SDL_Rect_UInt32_t s_SDL_FillRect_IntPtr_SDL_Rect_UInt32_t = __LoadFunction<SDL_FillRect_IntPtr_SDL_Rect_UInt32_t>("SDL_FillRect");
 
-        public static int SDL_FillRect(IntPtr dst, ref SDL_Rect rect, UInt32 color) => s_SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(dst, ref rect, color);
+        public unsafe static int SDL_FillRect(IntPtr dst, SDL_Rect* rect, UInt32 color) => s_SDL_FillRect_IntPtr_SDL_Rect_UInt32_t(dst, rect, color);
 
         private delegate int SDL_FillRects_IntPtr_IntPtr_int_UInt32_t(IntPtr dst, IntPtr rects, int count, UInt32 color);
 
@@ -248,7 +248,7 @@ namespace SDL2
 
         private static SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t = __LoadFunction<SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t>("SDL_SoftStretch");
 
-        public static int SDL_SoftStretch(IntPtr src, ref SDL_Rect srcrect, IntPtr dst, ref SDL_Rect dstrect) => s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(src, ref srcrect, dst, ref dstrect);
+        public unsafe static int SDL_SoftStretch(IntPtr src, SDL_Rect* srcrect, IntPtr dst, SDL_Rect* dstrect) => s_SDL_SoftStretch_SDL_Surface_SDL_Rect_SDL_Surface_SDL_Rect_t(src, srcrect, dst, dstrect);
 
         private delegate IntPtr SDL_ConvertSurface_IntPtr_IntPtr_UInt32_t(IntPtr src, IntPtr fmt, UInt32 flags);
 
@@ -267,7 +267,7 @@ namespace SDL2
 #pragma warning disable
         static SDL_surface()
         {
-            var blitScaled = new[] { "BlitScaled", "UpperBlitScaled" };
+            var blitScaled = new[] { "SDL_BlitScaled", "SDL_UpperBlitScaled" };
             foreach (var name in blitScaled)
             {
                 try
@@ -278,6 +278,8 @@ namespace SDL2
                 }
                 catch (Exception ex) { }
             }
+            if (s_SDL_BlitScaled_IntPtr_SDL_Rect_IntPtr_SDL_Rect_t == null)
+                throw new EntryPointNotFoundException("Could not find SDL_BlitScaled function");
         }
 #pragma warning enable
     }
