@@ -140,11 +140,11 @@ namespace SDL2
 
         public static IntPtr SDL_CreateTexture(IntPtr renderer, UInt32 format, int access, int w, int h) => s_SDL_CreateTexture_IntPtr_UInt32_int_int_int_t(renderer, format, access, w, h);
 
-        private delegate IntPtr SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t(IntPtr renderer, ref SDL_Surface surface);
+        private delegate IntPtr SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t(IntPtr renderer, IntPtr surface);
 
         private static SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t s_SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t = __LoadFunction<SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t>("SDL_CreateTextureFromSurface");
 
-        public static IntPtr SDL_CreateTextureFromSurface(IntPtr renderer, ref SDL_Surface surface) => s_SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t(renderer, ref surface);
+        public static IntPtr SDL_CreateTextureFromSurface(IntPtr renderer, IntPtr surface) => s_SDL_CreateTextureFromSurface_IntPtr_SDL_Surface_t(renderer, surface);
 
         private delegate int SDL_QueryTexture_IntPtr_uint_int_int_int_t(IntPtr texture, ref uint format, ref int access, ref int w, ref int h);
 
@@ -188,11 +188,11 @@ namespace SDL2
 
         public static int SDL_GetTextureBlendMode(IntPtr texture, ref SDL_BlendMode blendMode) => s_SDL_GetTextureBlendMode_IntPtr_SDL_BlendMode_t(texture, ref blendMode);
 
-        private delegate int SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t(IntPtr texture, ref SDL_Rect rect, IntPtr pixels, int pitch);
+        private delegate int SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t(IntPtr texture, IntPtr rect, IntPtr pixels, int pitch);
 
         private static SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t s_SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t = __LoadFunction<SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t>("SDL_UpdateTexture");
 
-        public static int SDL_UpdateTexture(IntPtr texture, ref SDL_Rect rect, IntPtr pixels, int pitch) => s_SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t(texture, ref rect, pixels, pitch);
+        public static int SDL_UpdateTexture(IntPtr texture, IntPtr rect, IntPtr pixels, int pitch) => s_SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t(texture, rect, pixels, pitch);
 
         private delegate int SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(IntPtr texture, ref SDL_Rect rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch);
 
@@ -200,11 +200,11 @@ namespace SDL2
 
         public static int SDL_UpdateYUVTexture(IntPtr texture, ref SDL_Rect rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch) => s_SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(texture, ref rect, ref Yplane, Ypitch, ref Uplane, Upitch, ref Vplane, Vpitch);
 
-        private delegate int SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t(IntPtr texture, ref SDL_Rect rect, out IntPtr pixels, ref int pitch);
+        private unsafe delegate int SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t(IntPtr texture, IntPtr rect, out IntPtr pixels, ref int pitch);
 
         private static SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t s_SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t = __LoadFunction<SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t>("SDL_LockTexture");
 
-        public static int SDL_LockTexture(IntPtr texture, ref SDL_Rect rect, out IntPtr pixels, ref int pitch) => s_SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t(texture, ref rect, out pixels, ref pitch);
+        public unsafe static int SDL_LockTexture(IntPtr texture, IntPtr rect, out IntPtr pixels, ref int pitch) => s_SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t(texture, rect, out pixels, ref pitch);
 
         private delegate void SDL_UnlockTexture_IntPtr_t(IntPtr texture);
 
@@ -368,11 +368,11 @@ namespace SDL2
 
         public static int SDL_RenderCopyEx(IntPtr renderer, IntPtr texture, ref SDL_Rect srcrect, ref SDL_Rect dstrect, double angle, ref SDL_Point center, SDL_RendererFlip flip) => s_SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t(renderer, texture, ref srcrect, ref dstrect, angle, ref center, flip);
 
-        private delegate int SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t(IntPtr renderer, ref SDL_Rect rect, UInt32 format, out IntPtr pixels, int pitch);
+        private unsafe delegate int SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t(IntPtr renderer, IntPtr rect, UInt32 format, IntPtr pixels, int pitch);
 
         private static SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t s_SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t = __LoadFunction<SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t>("SDL_RenderReadPixels");
 
-        public static int SDL_RenderReadPixels(IntPtr renderer, ref SDL_Rect rect, UInt32 format, out IntPtr pixels, int pitch) => s_SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t(renderer, ref rect, format, out pixels, pitch);
+        public unsafe static int SDL_RenderReadPixels(IntPtr renderer, IntPtr rect, UInt32 format, IntPtr pixels, int pitch) => s_SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t(renderer, rect, format, pixels, pitch);
 
         private delegate void SDL_RenderPresent_IntPtr_t(IntPtr renderer);
 
