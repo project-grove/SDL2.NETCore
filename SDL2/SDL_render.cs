@@ -194,11 +194,11 @@ namespace SDL2
 
         public static int SDL_UpdateTexture(IntPtr texture, IntPtr rect, IntPtr pixels, int pitch) => s_SDL_UpdateTexture_IntPtr_SDL_Rect_IntPtr_int_t(texture, rect, pixels, pitch);
 
-        private delegate int SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(IntPtr texture, ref SDL_Rect rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch);
+        private unsafe delegate int SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(IntPtr texture, SDL_Rect* rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch);
 
         private static SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t s_SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t = __LoadFunction<SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t>("SDL_UpdateYUVTexture");
 
-        public static int SDL_UpdateYUVTexture(IntPtr texture, ref SDL_Rect rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch) => s_SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(texture, ref rect, ref Yplane, Ypitch, ref Uplane, Upitch, ref Vplane, Vpitch);
+        public unsafe static int SDL_UpdateYUVTexture(IntPtr texture, SDL_Rect* rect, ref byte Yplane, int Ypitch, ref byte Uplane, int Upitch, ref byte Vplane, int Vpitch) => s_SDL_UpdateYUVTexture_IntPtr_SDL_Rect_byte_int_byte_int_byte_int_t(texture, rect, ref Yplane, Ypitch, ref Uplane, Upitch, ref Vplane, Vpitch);
 
         private unsafe delegate int SDL_LockTexture_IntPtr_SDL_Rect_IntPtr_int_t(IntPtr texture, IntPtr rect, out IntPtr pixels, ref int pitch);
 
@@ -242,29 +242,29 @@ namespace SDL2
 
         public static void SDL_RenderGetLogicalSize(IntPtr renderer, ref int w, ref int h) => s_SDL_RenderGetLogicalSize_IntPtr_int_int_t(renderer, ref w, ref h);
 
-        private delegate int SDL_RenderSetViewport_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate int SDL_RenderSetViewport_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderSetViewport_IntPtr_SDL_Rect_t s_SDL_RenderSetViewport_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderSetViewport_IntPtr_SDL_Rect_t>("SDL_RenderSetViewport");
 
-        public static int SDL_RenderSetViewport(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderSetViewport_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static int SDL_RenderSetViewport(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderSetViewport_IntPtr_SDL_Rect_t(renderer, rect);
 
-        private delegate void SDL_RenderGetViewport_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate void SDL_RenderGetViewport_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderGetViewport_IntPtr_SDL_Rect_t s_SDL_RenderGetViewport_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderGetViewport_IntPtr_SDL_Rect_t>("SDL_RenderGetViewport");
 
-        public static void SDL_RenderGetViewport(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderGetViewport_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static void SDL_RenderGetViewport(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderGetViewport_IntPtr_SDL_Rect_t(renderer, rect);
 
-        private delegate int SDL_RenderSetClipRect_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate int SDL_RenderSetClipRect_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderSetClipRect_IntPtr_SDL_Rect_t s_SDL_RenderSetClipRect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderSetClipRect_IntPtr_SDL_Rect_t>("SDL_RenderSetClipRect");
 
-        public static int SDL_RenderSetClipRect(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderSetClipRect_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static int SDL_RenderSetClipRect(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderSetClipRect_IntPtr_SDL_Rect_t(renderer, rect);
 
-        private delegate void SDL_RenderGetClipRect_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate void SDL_RenderGetClipRect_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderGetClipRect_IntPtr_SDL_Rect_t s_SDL_RenderGetClipRect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderGetClipRect_IntPtr_SDL_Rect_t>("SDL_RenderGetClipRect");
 
-        public static void SDL_RenderGetClipRect(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderGetClipRect_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static void SDL_RenderGetClipRect(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderGetClipRect_IntPtr_SDL_Rect_t(renderer, rect);
 
         private delegate int SDL_RenderSetScale_IntPtr_float_float_t(IntPtr renderer, float scaleX, float scaleY);
 
@@ -314,11 +314,11 @@ namespace SDL2
 
         public static int SDL_RenderDrawPoint(IntPtr renderer, int x, int y) => s_SDL_RenderDrawPoint_IntPtr_int_int_t(renderer, x, y);
 
-        private delegate int SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t(IntPtr renderer, ref SDL_Point points, int count);
+        private unsafe delegate int SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t(IntPtr renderer, SDL_Point* points, int count);
 
         private static SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t s_SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t = __LoadFunction<SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t>("SDL_RenderDrawPoints");
 
-        public static int SDL_RenderDrawPoints(IntPtr renderer, ref SDL_Point points, int count) => s_SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t(renderer, ref points, count);
+        public unsafe static int SDL_RenderDrawPoints(IntPtr renderer, SDL_Point* points, int count) => s_SDL_RenderDrawPoints_IntPtr_SDL_Point_int_t(renderer, points, count);
 
         private delegate int SDL_RenderDrawLine_IntPtr_int_int_int_int_t(IntPtr renderer, int x1, int y1, int x2, int y2);
 
@@ -326,47 +326,47 @@ namespace SDL2
 
         public static int SDL_RenderDrawLine(IntPtr renderer, int x1, int y1, int x2, int y2) => s_SDL_RenderDrawLine_IntPtr_int_int_int_int_t(renderer, x1, y1, x2, y2);
 
-        private delegate int SDL_RenderDrawLines_IntPtr_SDL_Point_int_t(IntPtr renderer, ref SDL_Point points, int count);
+        private unsafe delegate int SDL_RenderDrawLines_IntPtr_SDL_Point_int_t(IntPtr renderer, SDL_Point* points, int count);
 
         private static SDL_RenderDrawLines_IntPtr_SDL_Point_int_t s_SDL_RenderDrawLines_IntPtr_SDL_Point_int_t = __LoadFunction<SDL_RenderDrawLines_IntPtr_SDL_Point_int_t>("SDL_RenderDrawLines");
 
-        public static int SDL_RenderDrawLines(IntPtr renderer, ref SDL_Point points, int count) => s_SDL_RenderDrawLines_IntPtr_SDL_Point_int_t(renderer, ref points, count);
+        public unsafe static int SDL_RenderDrawLines(IntPtr renderer, SDL_Point* points, int count) => s_SDL_RenderDrawLines_IntPtr_SDL_Point_int_t(renderer, points, count);
 
-        private delegate int SDL_RenderDrawRect_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate int SDL_RenderDrawRect_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderDrawRect_IntPtr_SDL_Rect_t s_SDL_RenderDrawRect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderDrawRect_IntPtr_SDL_Rect_t>("SDL_RenderDrawRect");
 
-        public static int SDL_RenderDrawRect(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderDrawRect_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static int SDL_RenderDrawRect(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderDrawRect_IntPtr_SDL_Rect_t(renderer, rect);
 
-        private delegate int SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t(IntPtr renderer, ref SDL_Rect rects, int count);
+        private unsafe delegate int SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t(IntPtr renderer, SDL_Rect* rects, int count);
 
         private static SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t s_SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t = __LoadFunction<SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t>("SDL_RenderDrawRects");
 
-        public static int SDL_RenderDrawRects(IntPtr renderer, ref SDL_Rect rects, int count) => s_SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t(renderer, ref rects, count);
+        public unsafe static int SDL_RenderDrawRects(IntPtr renderer, SDL_Rect* rects, int count) => s_SDL_RenderDrawRects_IntPtr_SDL_Rect_int_t(renderer, rects, count);
 
-        private delegate int SDL_RenderFillRect_IntPtr_SDL_Rect_t(IntPtr renderer, ref SDL_Rect rect);
+        private unsafe delegate int SDL_RenderFillRect_IntPtr_SDL_Rect_t(IntPtr renderer, SDL_Rect* rect);
 
         private static SDL_RenderFillRect_IntPtr_SDL_Rect_t s_SDL_RenderFillRect_IntPtr_SDL_Rect_t = __LoadFunction<SDL_RenderFillRect_IntPtr_SDL_Rect_t>("SDL_RenderFillRect");
 
-        public static int SDL_RenderFillRect(IntPtr renderer, ref SDL_Rect rect) => s_SDL_RenderFillRect_IntPtr_SDL_Rect_t(renderer, ref rect);
+        public unsafe static int SDL_RenderFillRect(IntPtr renderer, SDL_Rect* rect) => s_SDL_RenderFillRect_IntPtr_SDL_Rect_t(renderer, rect);
 
-        private delegate int SDL_RenderFillRects_IntPtr_SDL_Rect_int_t(IntPtr renderer, ref SDL_Rect rects, int count);
+        private unsafe delegate int SDL_RenderFillRects_IntPtr_SDL_Rect_int_t(IntPtr renderer, SDL_Rect* rects, int count);
 
         private static SDL_RenderFillRects_IntPtr_SDL_Rect_int_t s_SDL_RenderFillRects_IntPtr_SDL_Rect_int_t = __LoadFunction<SDL_RenderFillRects_IntPtr_SDL_Rect_int_t>("SDL_RenderFillRects");
 
-        public static int SDL_RenderFillRects(IntPtr renderer, ref SDL_Rect rects, int count) => s_SDL_RenderFillRects_IntPtr_SDL_Rect_int_t(renderer, ref rects, count);
+        public unsafe static int SDL_RenderFillRects(IntPtr renderer, SDL_Rect* rects, int count) => s_SDL_RenderFillRects_IntPtr_SDL_Rect_int_t(renderer, rects, count);
 
-        private delegate int SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t(IntPtr renderer, IntPtr texture, ref SDL_Rect srcrect, ref SDL_Rect dstrect);
+        private unsafe delegate int SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t(IntPtr renderer, IntPtr texture, SDL_Rect* srcrect, SDL_Rect* dstrect);
 
         private static SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t s_SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t = __LoadFunction<SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t>("SDL_RenderCopy");
 
-        public static int SDL_RenderCopy(IntPtr renderer, IntPtr texture, ref SDL_Rect srcrect, ref SDL_Rect dstrect) => s_SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t(renderer, texture, ref srcrect, ref dstrect);
+        public unsafe static int SDL_RenderCopy(IntPtr renderer, IntPtr texture, SDL_Rect* srcrect, SDL_Rect* dstrect) => s_SDL_RenderCopy_IntPtr_IntPtr_SDL_Rect_SDL_Rect_t(renderer, texture, srcrect, dstrect);
 
-        private delegate int SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t(IntPtr renderer, IntPtr texture, ref SDL_Rect srcrect, ref SDL_Rect dstrect, double angle, ref SDL_Point center, SDL_RendererFlip flip);
+        private unsafe delegate int SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t(IntPtr renderer, IntPtr texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, SDL_Point* center, SDL_RendererFlip flip);
 
         private static SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t s_SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t = __LoadFunction<SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t>("SDL_RenderCopyEx");
 
-        public static int SDL_RenderCopyEx(IntPtr renderer, IntPtr texture, ref SDL_Rect srcrect, ref SDL_Rect dstrect, double angle, ref SDL_Point center, SDL_RendererFlip flip) => s_SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t(renderer, texture, ref srcrect, ref dstrect, angle, ref center, flip);
+        public unsafe static int SDL_RenderCopyEx(IntPtr renderer, IntPtr texture, SDL_Rect* srcrect, SDL_Rect* dstrect, double angle, SDL_Point* center, SDL_RendererFlip flip) => s_SDL_RenderCopyEx_IntPtr_IntPtr_SDL_Rect_SDL_Rect_double_SDL_Point_SDL_RendererFlip_t(renderer, texture, srcrect, dstrect, angle, center, flip);
 
         private unsafe delegate int SDL_RenderReadPixels_IntPtr_SDL_Rect_UInt32_IntPtr_int_t(IntPtr renderer, IntPtr rect, UInt32 format, IntPtr pixels, int pitch);
 
