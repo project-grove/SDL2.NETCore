@@ -16,8 +16,9 @@ excluded = list(map(re.compile, [
 excluded.extend(map(lambda n: re.compile("SDL_" + n + ".h"), [
     "assert", "atomic", "bits", "config", "endian", "filesystem", "loadso",
     "log", "main", "mutex", "name", "platform", "quit", "revision", "rwops",
-    "shape", "stdinc", "system", "syswm", "thread", "timer", "types", 
+    "shape", "stdinc", "system", "syswm", "thread", "timer", "types",
 ]))
+
 
 def useful_names(name):
     for regex in included:
@@ -28,19 +29,25 @@ def useful_names(name):
             return False
     return True
 
+
 header_filenames = []
 for (dirpath, dirnames, filenames) in walk(header_path):
     header_filenames.extend(filenames)
 header_filenames = list(filter(useful_names, header_filenames))
 header_filenames.sort()
-headers = list(map(lambda f: (f, os.path.join(header_path, f)), header_filenames))
+headers = list(
+    map(lambda f: (f, os.path.join(header_path, f)), header_filenames))
 
 
 # -------------------------- Source transformation -----------------------------
-CONST_REGEX = re.compile(r"#define\s+(?P<name>[a-zA-Z]\w*)\s+\(?(?P<value>[\w\d&|<>+\-*/\"]*)[\s\)]", re.MULTILINE)
-STRUCT_REGEX = re.compile(r"(?<=typedef struct)(?:[\s\w]*)\{(?P<contents>[^}]*)\}(?:\s*)(?:\w*?)(?:\s*)(?P<name>\w*);")
-ENUM_REGEX = re.compile(r"(?<=typedef enum)(?:[\s\w]*)\{(?P<contents>[^}]*)\}(?:\s*)(?:\w*?)(?:\s*)(?P<name>\w*);")
-FUNCTION_REGEX = re.compile(r"(?<=extern DECLSPEC )(?P<return_type>[\w\s\*]*)(?:SDLCALL)\s*(?P<name>[\w\d]*)\((?P<params>[\w\d\s,\*]*)\);")
+CONST_REGEX = re.compile(
+    r"#define\s+(?P<name>[a-zA-Z]\w*)\s+\(?(?P<value>[\w\d&|<>+\-*/\"]*)[\s\)]", re.MULTILINE)
+STRUCT_REGEX = re.compile(
+    r"(?<=typedef struct)(?:[\s\w]*)\{(?P<contents>[^}]*)\}(?:\s*)(?:\w*?)(?:\s*)(?P<name>\w*);")
+ENUM_REGEX = re.compile(
+    r"(?<=typedef enum)(?:[\s\w]*)\{(?P<contents>[^}]*)\}(?:\s*)(?:\w*?)(?:\s*)(?P<name>\w*);")
+FUNCTION_REGEX = re.compile(
+    r"(?<=extern DECLSPEC )(?P<return_type>[\w\s\*]*)(?:SDLCALL)\s*(?P<name>[\w\d]*)\((?P<params>[\w\d\s,\*]*)\);")
 TYPE_MAP = {
     'Uint8': 'byte',
     'Sint8': 'sbyte',
@@ -53,8 +60,10 @@ TYPE_MAP = {
     'char': 'IntPtr'
 }
 
+
 def sanitize(source):
     return source.replace("@{", "").replace("@}", "")
+
 
 def extract_defines(source):
     result = ""
@@ -80,6 +89,7 @@ def extract_structs(source):
         result += "\n}\n"
     return result + "\n"
 
+
 def extract_enums(source):
     result = ""
     matches = [m.groupdict() for m in ENUM_REGEX.finditer(source)]
@@ -88,6 +98,7 @@ def extract_enums(source):
         result += match["contents"]
         result += "\n}\n"
     return result + "\n"
+
 
 def rewrite_function_return_type(name):
     name = name.strip()
@@ -103,12 +114,14 @@ def rewrite_function_return_type(name):
 def rewrite_function_param(param):
     if '*' not in param:
         return param
-    (p_type, p_name) = (param.split('*')[0].strip(), param.split('*')[1].strip())
+    (p_type, p_name) = (param.split('*')
+                        [0].strip(), param.split('*')[1].strip())
     if p_type in TYPE_MAP:
         p_type = TYPE_MAP[p_type]
     if p_type != 'IntPtr':
         p_type = 'ref ' + p_type
     return p_type + " " + p_name
+
 
 def rewrite_function_params(params_str):
     if params_str == "void":
@@ -117,6 +130,7 @@ def rewrite_function_params(params_str):
     params = map(lambda s: s[6:] if s.startswith('const ') else s, params)
     params = map(rewrite_function_param, params)
     return ", ".join(params)
+
 
 def extract_functions(source):
     result = ""
@@ -137,7 +151,7 @@ def build_source(class_name, contents, all_classes):
     for other_class in all_classes:
         if other_class != class_name:
             result += "using static SDL2." + other_class + ";\n"
-    result +="\nnamespace SDL2\n{\npublic static class "
+    result += "\nnamespace SDL2\n{\npublic static class "
     result += class_name
     result += "\n{\n"
     result += extract_defines(contents)
@@ -159,4 +173,3 @@ for (header, path) in headers:
     source_file = open(os.path.join(out_folder, header[:-2] + ".cs"), mode="w")
     source_file.write(build_source(header[:-2], contents, all_classes))
     source_file.close()
-

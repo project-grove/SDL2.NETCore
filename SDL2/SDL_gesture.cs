@@ -45,23 +45,23 @@ namespace SDL2
 
         public static int SDL_RecordGesture(SDL_TouchID touchId) => s_SDL_RecordGesture_SDL_TouchID_t(touchId);
 
-        private delegate int SDL_SaveAllDollarTemplates_SDL_RWops_t(ref SDL_RWops dst);
+        private delegate int SDL_SaveAllDollarTemplates_SDL_RWops_t(IntPtr dst);
 
         private static SDL_SaveAllDollarTemplates_SDL_RWops_t s_SDL_SaveAllDollarTemplates_SDL_RWops_t = __LoadFunction<SDL_SaveAllDollarTemplates_SDL_RWops_t>("SDL_SaveAllDollarTemplates");
 
-        public static int SDL_SaveAllDollarTemplates(ref SDL_RWops dst) => s_SDL_SaveAllDollarTemplates_SDL_RWops_t(ref dst);
+        public static int SDL_SaveAllDollarTemplates(IntPtr dst) => s_SDL_SaveAllDollarTemplates_SDL_RWops_t(dst);
 
-        private delegate int SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t(SDL_GestureID gestureId, ref SDL_RWops dst);
+        private delegate int SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t(SDL_GestureID gestureId, IntPtr dst);
 
         private static SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t s_SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t = __LoadFunction<SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t>("SDL_SaveDollarTemplate");
 
-        public static int SDL_SaveDollarTemplate(SDL_GestureID gestureId, ref SDL_RWops dst) => s_SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t(gestureId, ref dst);
+        public static int SDL_SaveDollarTemplate(SDL_GestureID gestureId, IntPtr dst) => s_SDL_SaveDollarTemplate_SDL_GestureID_SDL_RWops_t(gestureId, dst);
 
-        private delegate int SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t(SDL_TouchID touchId, ref SDL_RWops src);
+        private delegate int SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t(SDL_TouchID touchId, IntPtr src);
 
         private static SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t s_SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t = __LoadFunction<SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t>("SDL_LoadDollarTemplates");
 
-        public static int SDL_LoadDollarTemplates(SDL_TouchID touchId, ref SDL_RWops src) => s_SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t(touchId, ref src);
+        public static int SDL_LoadDollarTemplates(SDL_TouchID touchId, IntPtr src) => s_SDL_LoadDollarTemplates_SDL_TouchID_SDL_RWops_t(touchId, src);
         private static T __LoadFunction<T>(string name) { return SDL2.Internal.Loader_SDL2.LoadFunction<T>(name); }
     }
 }

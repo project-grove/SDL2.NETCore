@@ -142,11 +142,11 @@ namespace SDL2
 
         public static void SDL_UnlockSurface(IntPtr surface) => s_SDL_UnlockSurface_SDL_Surface_t(surface);
 
-        private delegate IntPtr SDL_LoadBMP_RW_SDL_RWops_int_t(ref SDL_RWops src, int freesrc);
+        private delegate IntPtr SDL_LoadBMP_RW_SDL_RWops_int_t(IntPtr src, int freesrc);
 
         private static SDL_LoadBMP_RW_SDL_RWops_int_t s_SDL_LoadBMP_RW_SDL_RWops_int_t = __LoadFunction<SDL_LoadBMP_RW_SDL_RWops_int_t>("SDL_LoadBMP_RW");
 
-        public static IntPtr SDL_LoadBMP_RW(ref SDL_RWops src, int freesrc) => s_SDL_LoadBMP_RW_SDL_RWops_int_t(ref src, freesrc);
+        public static IntPtr SDL_LoadBMP_RW(IntPtr src, int freesrc) => s_SDL_LoadBMP_RW_SDL_RWops_int_t(src, freesrc);
 
         private delegate int SDL_SetSurfaceRLE_SDL_Surface_int_t(IntPtr surface, int flag);
 

@@ -113,11 +113,11 @@ namespace SDL2
             public IntPtr next; // * _SDL_GameController *next
         }
 
-        private delegate int SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t(ref SDL_RWops rw, int freerw);
+        private delegate int SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t(IntPtr rw, int freerw);
 
         private static SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t s_SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t = __LoadFunction<SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t>("SDL_GameControllerAddMappingsFromRW");
 
-        public static int SDL_GameControllerAddMappingsFromRW(ref SDL_RWops rw, int freerw) => s_SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t(ref rw, freerw);
+        public static int SDL_GameControllerAddMappingsFromRW(IntPtr rw, int freerw) => s_SDL_GameControllerAddMappingsFromRW_SDL_RWops_int_t(rw, freerw);
 
         private delegate int SDL_GameControllerAddMapping_IntPtr_t(IntPtr mappingString);
 

@@ -149,7 +149,8 @@ namespace SDL2
 
         private static SDL_GetCurrentAudioDriver__t s_SDL_GetCurrentAudioDriver__t = __LoadFunction<SDL_GetCurrentAudioDriver__t>("SDL_GetCurrentAudioDriver");
 
-        public static IntPtr SDL_GetCurrentAudioDriver() => s_SDL_GetCurrentAudioDriver__t();
+        private static IntPtr _SDL_GetCurrentAudioDriver() => s_SDL_GetCurrentAudioDriver__t();
+        public static string SDL_GetCurrentAudioDriver() => Marshal.PtrToStringAnsi(_SDL_GetCurrentAudioDriver());
 
         private delegate int SDL_OpenAudio_SDL_AudioSpec_SDL_AudioSpec_t(ref SDL_AudioSpec desired, ref SDL_AudioSpec obtained);
 
@@ -203,11 +204,11 @@ allowed_changes) => s_SDL_OpenAudioDevice_IntPtr_int_SDL_AudioSpec_SDL_AudioSpec
 
         public static void SDL_PauseAudioDevice(SDL_AudioDeviceID dev, int pause_on) => s_SDL_PauseAudioDevice_SDL_AudioDeviceID_int_t(dev, pause_on);
 
-        private delegate IntPtr SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t(ref SDL_RWops src, int freesrc, ref SDL_AudioSpec spec, IntPtr audio_buf, ref uint audio_len);
+        private delegate IntPtr SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t(IntPtr src, int freesrc, ref SDL_AudioSpec spec, IntPtr audio_buf, ref uint audio_len);
 
         private static SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t s_SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t = __LoadFunction<SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t>("SDL_LoadWAV_RW");
 
-        public static IntPtr SDL_LoadWAV_RW(ref SDL_RWops src, int freesrc, ref SDL_AudioSpec spec, IntPtr audio_buf, ref uint audio_len) => s_SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t(ref src, freesrc, ref spec, audio_buf, ref audio_len);
+        public static IntPtr SDL_LoadWAV_RW(IntPtr src, int freesrc, ref SDL_AudioSpec spec, IntPtr audio_buf, ref uint audio_len) => s_SDL_LoadWAV_RW_SDL_RWops_int_SDL_AudioSpec_IntPtr_uint_t(src, freesrc, ref spec, audio_buf, ref audio_len);
 
         private delegate void SDL_FreeWAV_byte_t(ref byte audio_buf);
 
