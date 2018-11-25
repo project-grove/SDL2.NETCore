@@ -104,9 +104,18 @@ namespace SDL2
             public int len_cvt;                /**< Length of converted audio buffer */
             public int len_mult;               /**< buffer must be len*len_mult big */
             public double len_ratio;           /**< Given len, final size is len*len_ratio */
-            /* UNSUPPORTED due to C# limitations */
-            // public unsafe fixed SDL_AudioFilter filters[10];        /**< Filter list */
-            // public int filter_index;           /**< Current audio conversion function */
+            // public unsafe fixed IntPtr filters[10];        /**< Filter list */
+            public IntPtr filter_1;
+            public IntPtr filter_2;
+            public IntPtr filter_3;
+            public IntPtr filter_4;
+            public IntPtr filter_5;
+            public IntPtr filter_6;
+            public IntPtr filter_7;
+            public IntPtr filter_8;
+            public IntPtr filter_9;
+            public IntPtr filter_10;
+            public int filter_index;           /**< Current audio conversion function */
 
         }
 
@@ -120,7 +129,9 @@ namespace SDL2
 
         private static SDL_GetAudioDriver_int_t s_SDL_GetAudioDriver_int_t = __LoadFunction<SDL_GetAudioDriver_int_t>("SDL_GetAudioDriver");
 
-        public static IntPtr SDL_GetAudioDriver(int index) => s_SDL_GetAudioDriver_int_t(index);
+        private static IntPtr _SDL_GetAudioDriver(int index) => s_SDL_GetAudioDriver_int_t(index);
+        public static string SDL_GetAudioDriver(int index) =>
+            Marshal.PtrToStringAnsi(_SDL_GetAudioDriver(index));
 
         private delegate int SDL_AudioInit_IntPtr_t(IntPtr driver_name);
 
